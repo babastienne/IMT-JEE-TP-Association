@@ -1,12 +1,13 @@
 package models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.beans.ConstructorProperties;
 import java.rmi.server.UID;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import static database.Entity.ENTITY;
 
 
 @Entity
@@ -22,6 +23,9 @@ public class Event {
     private Date date;
     @Column(name="location")
     private String location;
+
+    @OneToMany(mappedBy = "event")
+    private List<Subscription> subscriptions;
 
     public Event(){
 
@@ -66,6 +70,17 @@ public class Event {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public List<ServiceUser> getAllSubscribers(){
+        List<ServiceUser> users = new ArrayList<>();
+        //EntityManager em = ENTITY.getEntity();
+        for(Subscription sub: this.subscriptions){
+          //  users.add(em.find(ServiceUser.class, sub.get))
+            users.add(sub.getUser());
+        }
+
+        return users;
     }
 
 

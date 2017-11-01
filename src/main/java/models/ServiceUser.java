@@ -1,9 +1,6 @@
 package models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.rmi.server.UID;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +15,8 @@ public class ServiceUser {
     @Column(name="lastname")
     private String lastname;
 
+    @OneToMany(mappedBy = "user")
+    List<Subscription> subscriptions;
 
     public ServiceUser(){}
 
@@ -45,5 +44,12 @@ public class ServiceUser {
         this.lastname = lastname;
     }
 
+    public List<Event> getAllSubscribedEvent(){
+        List<Event> events = new ArrayList<>();
+        for(Subscription sub: this.subscriptions){
+            events.add(sub.getEvent());
+        }
+        return events;
+    }
 
 }
