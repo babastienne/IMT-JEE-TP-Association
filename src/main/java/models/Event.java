@@ -1,5 +1,9 @@
 package models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.beans.ConstructorProperties;
 import java.rmi.server.UID;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,19 +12,27 @@ import java.util.Date;
 @Entity
 public class Event {
 
-    private String title;
-    private String description;
-    private Date date;
-    private String location;
-    private ArrayList<User> subscribed;
+    @Id
     private UID uid;
+    @Column(name="title")
+    private String title;
+    @Column(name="description")
+    private String description;
+    @Column(name="date")
+    private Date date;
+    @Column(name="location")
+    private String location;
 
-    public Event(String title, String description, Date date, String location, ArrayList subscribed){
+    public Event(){
+
+    }
+
+    public Event(String title, String description, Date date, String location){
+        this();
         this.title = title;
         this.description = description;
         this.date = date;
         this.location = location;
-        this.subscribed = subscribed;
         this.uid = new UID();
     }
 
@@ -54,14 +66,6 @@ public class Event {
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public ArrayList<User> getSubscribed() {
-        return subscribed;
-    }
-
-    public void setSubscribed(ArrayList<User> subscribed) {
-        this.subscribed = subscribed;
     }
 
 

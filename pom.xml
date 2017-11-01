@@ -18,7 +18,19 @@
 	 </plugins>
 	</build>
 	
-		<dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>5.0.7.Final</version>
+		</dependency>
+
+		<!-- DERBY Database -->
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derbyclient</artifactId>
+			<version>10.11.1.1</version>
+		</dependency>
 	 <dependency>
 	   <groupId>javax.servlet</groupId>
 	   <artifactId>javax.servlet-api</artifactId>

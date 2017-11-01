@@ -1,22 +1,31 @@
 package models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.rmi.server.UID;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+@Entity
+public class ServiceUser {
 
+    @Id
     private UID uid;
+    @Column(name="firstname")
     private String firstname;
+    @Column(name="lastname")
     private String lastname;
-    private List<Event> subscribedEvents;
 
 
-    public User(String firstname, String lastname){
+    public ServiceUser(){}
+
+    public ServiceUser(String firstname, String lastname){
+        this();
         this.uid = new UID();
         this.firstname = firstname;
         this.lastname = lastname;
-        this.subscribedEvents = new ArrayList<>();
 
     }
 
@@ -36,13 +45,5 @@ public class User {
         this.lastname = lastname;
     }
 
-
-    public void subscribeEvent(Event event){
-        this.subscribedEvents.add(event);
-    }
-
-    public void unsubscribeEvent(Event event){
-        this.subscribedEvents.remove(event);
-    }
 
 }
