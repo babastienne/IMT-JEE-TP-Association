@@ -8,7 +8,7 @@
         <p>Les champs marqué du caractère (*) doivent obligatoirement être remplis pour pouvoir finaliser l'inscription.</p>
         <br/>
     </div>
-    <form class="container-fluid align-items-center" style="max-width: 350px; min-width: 350px;" method="POST" action=>
+    <form class="container-fluid align-items-center" style="max-width: 350px; min-width: 350px; margin-bottom: 5%;" method="POST" action=>
     	<div class="form-group">
         	<label for="inputEmail">Adresse e-mail (*)</label>
         	<input class="form-control" type ="email" name="email" value="" id="inputEmail" placeholder="j.dupont@fai.com" required autofocus/>
