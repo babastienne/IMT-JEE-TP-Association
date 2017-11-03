@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: qeude
@@ -17,11 +18,11 @@
     <title>Vegassociation</title>
 </head>
 <body>
-    <c:if test="${not empty authError">
+    <c:if test="${not empty authError}">
         <script>
             window.addEventListener("load",function(){
                 alert("${authError}");
-            }
+            })
         </script>
     </c:if>
 

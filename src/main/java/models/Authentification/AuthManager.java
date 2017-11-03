@@ -16,6 +16,7 @@ public class AuthManager {
 
     public static boolean checkAuth(String id, String password){
         EntityManager em = ENTITY.getEntity();
+        System.out.println("IIIDDD "+id);
         AuthUser authUser = em.find(AuthUser.class, id);
         return authUser.checkPassword(password);
     }

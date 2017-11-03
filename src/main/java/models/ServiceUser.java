@@ -1,25 +1,18 @@
 package models;
 
 import models.Authentification.AuthUser;
+import org.hibernate.annotations.GenericGenerator;
 
 import static database.Entity.ENTITY;
 
 import java.rmi.server.UID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class ServiceUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id", nullable=false)
     private UID uid;
     
     @Column(name="firstName", nullable=false)
@@ -43,7 +36,9 @@ public class ServiceUser {
 //    @OneToMany(targetEntity = Order.class, mappedBy = "user")
 //    List<Order> order;
 
-    @OneToOne
+
+
+    @OneToOne(mappedBy = "serviceUser", cascade = {CascadeType.ALL})
     private AuthUser authUser;
 
     @OneToOne
@@ -51,17 +46,33 @@ public class ServiceUser {
 
     public ServiceUser(){}
 
-    public ServiceUser(String firstname, String lastname, String identifiant, String address, int zip, String city, AuthUser authUser){
+    public ServiceUser(String firstname, String lastname, String identifiant, String address, int zip, String city){
         this();
         this.uid = new UID();
         this.firstName = firstname;
         this.lastName = lastname;
-        this.authUser = authUser;
+       //this.authUser = authUser;
         this.identifiant = identifiant;
         this.address = address;
         this.zip = zip;
         this.city = city;
 
+    }
+
+    public UID getUid() {
+        return uid;
+    }
+
+    public void setUid(UID uid) {
+        this.uid = uid;
+    }
+
+    public AuthUser getAuthUser() {
+        return authUser;
+    }
+
+    public void setAuthUser(AuthUser authUser) {
+        this.authUser = authUser;
     }
 
     public String getFirstname() {
@@ -89,11 +100,11 @@ public class ServiceUser {
 	}
 
 	public String getAdress() {
-		return adress;
+		return address;
 	}
 
 	public void setAdress(String adress) {
-		this.adress = adress;
+		this.address = adress;
 	}
 
 	public int getZip() {

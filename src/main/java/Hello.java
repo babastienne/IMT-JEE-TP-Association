@@ -1,3 +1,5 @@
+import servlets.util.TokenChecker;
+
 import javax.jws.WebService;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,11 +13,13 @@ import java.io.PrintWriter;
 public class Hello extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        TokenChecker.checkConnection(request, response);
         process(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
     {
+        TokenChecker.checkConnection(request, response);
         process(request, response);
     }
 
@@ -29,5 +33,7 @@ public class Hello extends HttpServlet {
         out.println("<h1>URI : " +
 
                 request.getRequestURI() + "</h1>");
+        out.println("<h1> Connection:"+request.getAttribute("isConnected")+ " </h1>");
+
     }
 }

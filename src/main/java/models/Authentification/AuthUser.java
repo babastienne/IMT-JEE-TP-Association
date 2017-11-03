@@ -1,8 +1,9 @@
 package models.Authentification;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.Id;
+import models.ServiceUser;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.rmi.server.UID;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -16,11 +17,14 @@ public class AuthUser {
     private String id;
     private UID token;
     private String hashPassword;
+    @OneToOne(fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
+    private ServiceUser serviceUser;
 
-    public AuthUser(){}
+  //  public AuthUser(){}
 
     public AuthUser(String id, String password){
-        this();
+       // this();
         this.token = new UID();
         this.id = id;
         try {
@@ -29,6 +33,14 @@ public class AuthUser {
             System.err.println("Erreur dans la generation du hash MD5 du mot de passe");
             e.printStackTrace();
         }
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public UID getToken() {
@@ -71,6 +83,7 @@ public class AuthUser {
             System.err.println("Erreur dans la generation du hash MD5 du mot de passe");
             e.printStackTrace();
         }
+        System.out.println("password good or not: "+Boolean.toString(checked));
         return checked;
     }
 

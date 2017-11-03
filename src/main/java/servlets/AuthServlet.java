@@ -18,44 +18,12 @@ import java.rmi.server.UID;
 
 import static database.Entity.ENTITY;
 
-@WebServlet(name = "AuthServlet")
+@WebServlet(name = "AuthServlet", urlPatterns = "/auth")
 public class AuthServlet extends HttpServlet {
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        boolean toRegister = Boolean.parseBoolean(request.getParameter("register"));
-        if(toRegister){
-            doRegister(request, response);
-        }else{
-            doAuthenticate(request, response);
-        }
-    }
-
-    private void doRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
-        String password =  request.getParameter("password");
-        AuthUser authUser = new AuthUser(id, password);
-        EntityManager em = ENTITY.getEntity();
-        em.merge(authUser);
-        em.getTransaction().commit();
-        Cookie monCookie = new Cookie( "authToken", authUser.getToken().toString() );
-        String firstname = request.getParameter("firstname");
-        String lastname = request.getParameter("lastname");
-        String address = request.getParameter("address");
-        int zip = Integer.parseInt(request.getParameter("zip"));
-        String city = request.getParameter("city");
-        String identifiant = request.getParameter("identifiant");
-
-        ServiceUser user = new ServiceUser(firstname, lastname, identifiant, address, zip, city, authUser);
-
-        em.merge(user);
-        em.getTransaction().commit();
-        response.addCookie(monCookie);
-    }
-
-
-    private void doAuthenticate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
+        String id = request.getParameter("email");
         String password =  request.getParameter("password");
         boolean isConnected = AuthManager.checkAuth(id, password);
         if(isConnected){
@@ -67,8 +35,9 @@ public class AuthServlet extends HttpServlet {
         }
     }
 
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("/jsp/authentification/auth_page.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/jsp/index.jsp"); // TODO TO CHANGE
         rd.forward(request, response);
     }
 }

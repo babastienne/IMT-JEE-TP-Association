@@ -7,7 +7,7 @@
         <h2> Authentification </h2>
         <br/>
     </div>
-    <form method="POST" action=>
+    <form method="POST" action="/auth">
         <label for="inputEmail" class="sr-only form">Adresse e-mail</label>
         <input class="form-control" type ="email" name="email" value="" id="inputEmail" placeholder="Adresse e-mail" required autofocus/>
         <br/>
