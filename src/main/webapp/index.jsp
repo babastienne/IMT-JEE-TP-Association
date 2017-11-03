@@ -17,6 +17,13 @@
     <title>Vegassociation</title>
 </head>
 <body>
+    <c:if test="${not empty authError">
+        <script>
+            window.addEventListener("load",function(){
+                alert("${authError}");
+            }
+        </script>
+    </c:if>
 
     <%@include file="jsp/partials/login.jspf" %>
 
