@@ -34,7 +34,8 @@ public class AuthServlet extends HttpServlet {
         }
     }
 
-   /* protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+   /* CE BOUT DE CODE CORRESPOND A L'INSCRIPTION D'UN USER
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
         String password =  request.getParameter("password");
         AuthUser authUser = new AuthUser(id, password);
