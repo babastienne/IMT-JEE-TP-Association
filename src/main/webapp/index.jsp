@@ -17,17 +17,10 @@
     <title>Vegassociation</title>
 </head>
 <body>
-    <c:if test="${not empty authError">
-        <script>
-            window.addEventListener("load",function(){
-                alert("${authError}");
-            }
-        </script>
-    </c:if>
-
-    <%@include file="jsp/partials/login.jspf" %>
 
 
-<script src="assets/js/bootstrap.min.js"></script>
+
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
 </body>
 </html>
