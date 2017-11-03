@@ -1,10 +1,13 @@
 package models.Authentification;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import java.rmi.server.UID;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import static database.Entity.ENTITY;
 
 @Entity
 public class AuthUser {
@@ -14,10 +17,9 @@ public class AuthUser {
     private UID token;
     private String hashPassword;
 
-
     public AuthUser(){}
 
-    private AuthUser(String id, String password){
+    public AuthUser(String id, String password){
         this();
         this.token = new UID();
         this.id = id;
@@ -29,6 +31,21 @@ public class AuthUser {
         }
     }
 
+    public UID getToken() {
+        return token;
+    }
+
+    public void setToken(UID token) {
+        this.token = token;
+    }
+
+    public String getHashPassword() {
+        return hashPassword;
+    }
+
+    public void setHashPassword(String hashPassword) {
+        this.hashPassword = hashPassword;
+    }
 
     private String toHash(String str) throws NoSuchAlgorithmException {
         StringBuffer hexString = new StringBuffer();
@@ -56,5 +73,13 @@ public class AuthUser {
         }
         return checked;
     }
+
+    public UID refreshToken(){
+        EntityManager em = ENTITY.getEntity();
+        this.token = new UID();
+        em.getTransaction().commit();
+        return this.token;
+    }
+
 
 }
