@@ -15,8 +15,6 @@ public class ServiceOrder {
     @OneToOne
     private ServiceUser user;
 
-    private Date date;
-
     @OneToMany(mappedBy = "id")
     private List<Item> items;
 
@@ -25,7 +23,6 @@ public class ServiceOrder {
 
     public ServiceOrder(ServiceUser user, Date date){
         this.user = user;
-        this.date = date;
     }
 
     public ServiceUser getUser() {
@@ -34,14 +31,6 @@ public class ServiceOrder {
 
     public void setUser(ServiceUser user) {
         this.user = user;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public void addItem(Item item){

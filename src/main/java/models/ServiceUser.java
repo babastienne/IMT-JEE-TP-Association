@@ -1,22 +1,42 @@
 package models;
 
-import javax.persistence.*;
-import javax.persistence.criteria.Order;
-import java.rmi.server.UID;
-import java.util.ArrayList;
-import java.util.List;
-
 import static database.Entity.ENTITY;
+
+import java.rmi.server.UID;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class ServiceUser {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="id", nullable=false)
     private UID uid;
-    @Column(name="firstname")
-    private String firstname;
-    @Column(name="lastname")
-    private String lastname;
+    
+    @Column(name="firstName", nullable=false)
+    private String firstName;
+    
+    @Column(name="lastName", nullable=false)
+    private String lastName;
+    
+    @Column(name="identifiant", nullable=false, unique=true)
+    private String identifiant;
+    
+    @Column(name="adress", nullable=true)
+    private String adress;
+    
+    @Column(name="zip", nullable=true)
+    private int zip;
+    
+    @Column(name="city", nullable=true)
+    private String city;
 
 //    @OneToMany(targetEntity = Order.class, mappedBy = "user")
 //    List<Order> order;
@@ -29,29 +49,60 @@ public class ServiceUser {
     public ServiceUser(String firstname, String lastname){
         this();
         this.uid = new UID();
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.firstName = firstname;
+        this.lastName = lastname;
 
     }
 
     public String getFirstname() {
-        return firstname;
+        return firstName;
     }
 
     public void setFirstname(String firstname) {
-        this.firstname = firstname;
+        this.firstName = firstname;
     }
 
     public String getLastname() {
-        return lastname;
+        return lastName;
     }
 
     public void setLastname(String lastname) {
-        this.lastname = lastname;
+        this.lastName = lastname;
     }
+    
+    public String getIdentifiant() {
+		return identifiant;
+	}
 
+	public void setIdentifiant(String identifiant) {
+		this.identifiant = identifiant;
+	}
 
-    public ServiceOrder getOrder(){
+	public String getAdress() {
+		return adress;
+	}
+
+	public void setAdress(String adress) {
+		this.adress = adress;
+	}
+
+	public int getZip() {
+		return zip;
+	}
+
+	public void setZip(int zip) {
+		this.zip = zip;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public ServiceOrder getOrder(){
         return this.order;
     }
 
