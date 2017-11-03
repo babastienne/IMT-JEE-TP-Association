@@ -1,4 +1,4 @@
-<%--
+
   User: babastienne
   Date: 02/11/2017
   Time: 16:21
@@ -16,11 +16,11 @@
     <title>Vegassociation</title>
 </head>
 <body>
+<<<<<<< Updated upstream
 
-<%@ page pageEncoding="UTF-8" %>
-
-
-
+    <%@include file="jsp/partials/register.jspf" %>
+    <%@include file="jsp/partials/register.jspf" %>
+=======
 <div class="container-fluid align-items-center">
     <div class="text-center">
         <h2> Inscrivez-vous à la vegassociation </h2>
@@ -61,14 +61,9 @@
         </div>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Inscription</button>
+>>>>>>> Stashed changes
 
-        <div>
-            <a href="">Retourner à la page d'authentification</a>
-        </div>
-    </form>
-</div>
 
-<script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
 </body>
 </html>
