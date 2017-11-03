@@ -52,10 +52,8 @@ public class BaseServlet extends HttpServlet {
 
     protected void renderNotConnected(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String destination = "index.jsp";
-        PrintWriter out = response.getWriter();
-        out.println("<script type=\"text/javascript\">");
-        out.println("alert('User or password incorrect');");
-        out.println("</script>");
+        request.setAttribute("authError", "Vous devez être connecté pour accéder à cette page.");
+        RequestDispatcher rd = request.getRequestDispatcher(destination);
         response.sendRedirect(destination);
     }
 }
