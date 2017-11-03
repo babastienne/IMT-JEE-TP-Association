@@ -12,10 +12,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "BaseServlet")
+@WebServlet(name = "BaseServlet", urlPatterns = "/base")
 public class BaseServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+    }
+
+    private void route(HttpServletRequest request, HttpServletResponse response){
+        if(request.getParameter("jspPage").equals("auth")){
+            RequestDispatcher rd = request.getRequestDispatcher()
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,6 +49,7 @@ public class BaseServlet extends HttpServlet {
         if(AuthManager.checkToken(authCookie)) {
             return true;
         }
+        return false;
     }
 
     protected void renderConnected(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

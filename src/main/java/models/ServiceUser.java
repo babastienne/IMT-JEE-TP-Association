@@ -1,5 +1,7 @@
 package models;
 
+import models.Authentification.AuthUser;
+
 import static database.Entity.ENTITY;
 
 import java.rmi.server.UID;
@@ -30,7 +32,7 @@ public class ServiceUser {
     private String identifiant;
     
     @Column(name="adress", nullable=true)
-    private String adress;
+    private String address;
     
     @Column(name="zip", nullable=true)
     private int zip;
@@ -42,15 +44,23 @@ public class ServiceUser {
 //    List<Order> order;
 
     @OneToOne
+    private AuthUser authUser;
+
+    @OneToOne
     private ServiceOrder order;
 
     public ServiceUser(){}
 
-    public ServiceUser(String firstname, String lastname){
+    public ServiceUser(String firstname, String lastname, String identifiant, String address, int zip, String city, AuthUser authUser){
         this();
         this.uid = new UID();
         this.firstName = firstname;
         this.lastName = lastname;
+        this.authUser = authUser;
+        this.identifiant = identifiant;
+        this.address = address;
+        this.zip = zip;
+        this.city = city;
 
     }
 
