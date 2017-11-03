@@ -1,5 +1,6 @@
 package models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,41 +11,56 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="code", nullable=false)
     private long id;
+    
+    @Column(name="price", nullable=false)
     private double price;
+    
+    @Column(name="stock", nullable=false)
+    private int stock;
+    
+    @Column(name="name")
     private String name;
-    private String description;
 
 
     public Item(){}
 
-    public Item(double price, String name, String description){
-        this.price = price;
-        this.name=name;
-        this.description=description;
-    }
+	public Item(double price, int stock, String name) {
+		super();
+		this.price = price;
+		this.stock = stock;
+		this.name = name;
+	}
 
-    public double getPrice() {
-        return price;
-    }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
 
-    public String getName() {
-        return name;
-    }
+	public double getPrice() {
+		return price;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    public String getDescription() {
-        return description;
-    }
+	public void setPrice(double price) {
+		this.price = price;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+
+	public int getStock() {
+		return stock;
+	}
+
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }
