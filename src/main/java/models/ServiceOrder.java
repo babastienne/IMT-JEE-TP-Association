@@ -1,22 +1,35 @@
 package models;
 
-import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="ServiceOrder")
 public class ServiceOrder {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="id", nullable=false)
     private long id;
 
-    @OneToOne
+    @OneToOne(fetch=FetchType.EAGER)
     private ServiceUser user;
 
-    @OneToMany(mappedBy = "id")
-    private List<Item> items;
+    @OneToMany(mappedBy="order")
+    private Set<Item> items = new HashSet<Item>();
 
 
     public ServiceOrder(){}
@@ -37,8 +50,12 @@ public class ServiceOrder {
         this.items.add(item);
     }
 
-    public List<Item> getItems(){
+    public Collection<Item> getItems(){
         return this.items;
+    }
+    
+    public void clearItems() {
+    	this.items = new HashSet<Item>();
     }
 
 

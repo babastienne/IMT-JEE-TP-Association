@@ -7,12 +7,15 @@ import java.rmi.server.UID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="ServiceUser")
 public class ServiceUser {
 
     @Id
@@ -37,11 +40,14 @@ public class ServiceUser {
     
     @Column(name="city", nullable=true)
     private String city;
+    
+    @Column(name="country", nullable=true)
+    private String country;
 
 //    @OneToMany(targetEntity = Order.class, mappedBy = "user")
 //    List<Order> order;
 
-    @OneToOne
+    @OneToOne(fetch=FetchType.EAGER)
     private ServiceOrder order;
 
     public ServiceUser(){}
@@ -51,7 +57,6 @@ public class ServiceUser {
         this.uid = new UID();
         this.firstName = firstname;
         this.lastName = lastname;
-
     }
 
     public String getFirstname() {
@@ -100,6 +105,14 @@ public class ServiceUser {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+	
+	public String getCountry() {
+		return country;
+	}
+	
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 	public ServiceOrder getOrder(){

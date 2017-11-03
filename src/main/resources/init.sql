@@ -1,0 +1,1 @@
+INSERT INTO Item(code, name, price, stock) VALUES  ("Farine de blé bio", 5.20, 18),("Farine de maïs sans gluten", 6.17, 11),("Panier de légumes biologiques", 8.90, 20),("Don à l'association des AMAP locales", 30.0, 100),("Beurre végétal", 5.00, 25),("Lait de soja", 3.50, 10),("Galettes de Tofu", 4.00, 33),("Fromage végétal", 6.15, 4),("Lait de noix de coco", 2.8, 1);

@@ -5,13 +5,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "Item")
 public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="code", nullable=false)
     private long id;
     
     @Column(name="price", nullable=false)
@@ -20,9 +23,12 @@ public class Item {
     @Column(name="stock", nullable=false)
     private int stock;
     
-    @Column(name="name")
+    @Column(name="name", nullable=false)
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name="ORDER_ID")
+    private ServiceOrder order;
 
     public Item(){}
 
