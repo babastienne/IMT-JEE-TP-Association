@@ -5,12 +5,15 @@
 <div class="container-fluid align-items-center form-login">
     <div class="text-center">
         <h2> Authentification </h2>
+        <br/>
     </div>
     <form method="POST" action=>
-        <label for="inputEmail" class="sr-only form">Adresse mail</label>
-        <input class="form-control" type ="email" name="email" value="" id="inputEmail" placeholder="Adresse mail" required autofocus/>
+        <label for="inputEmail" class="sr-only form">Adresse e-mail</label>
+        <input class="form-control" type ="email" name="email" value="" id="inputEmail" placeholder="Adresse e-mail" required autofocus/>
+        <br/>
         <label for="inputPassword" class="sr-only">Mot de passe</label>
         <input type="password" name="password" class="form-control" id= "inputPassword" value="" placeholder="Mot de passe" required/>
+        <br/>
         <div>
             <label>
                 <input type="checkbox" value="remember"> Se souvenir de moi
@@ -19,8 +22,8 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
     </form>
 
-    <div>
-        <a href="">S'inscrire</a>
-        <a href="">Mot de passe oublié</a>
+    <div class="row">
+        <a class="col" href="register">S'inscrire</a>
+        <a class="col" href="">Mot de passe oublié</a>
     </div>
 </div>
