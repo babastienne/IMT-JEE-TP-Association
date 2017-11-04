@@ -24,14 +24,24 @@ public class AuthManager {
         EntityManager em = ENTITY.getEntity();
 
 
+      //  String sql = "SELECT * FROM AUTHUSER WHERE AUTHUSER.TOKEN = '"+token+"'";
+
+
+
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<AuthUser> c = cb.createQuery(AuthUser.class);
         Root<AuthUser> authUser = c.from(AuthUser.class);
-        c.select(authUser).where( cb.equal( authUser.get("token"), token ) );
+        //c.select(authUser).where( cb.equal( authUser.get("token"), token ) );
+        c.select(authUser);
         Query query = em.createQuery( c ) ;
-        List list = query.getResultList();
+        List<AuthUser> list = (List<AuthUser>) query.getResultList();
         System.out.println(list.size());
-        return !list.isEmpty();
+        for(AuthUser user : list){
+            if(user.getToken().equals(token)){
+                return true;
+            }
+        }
+        return true;
     }
 
     public static String refreshToken(String id){
