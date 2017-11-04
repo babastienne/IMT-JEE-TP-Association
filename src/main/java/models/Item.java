@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import static database.Entity.ENTITY;
+
 @Entity
 public class Item {
 
