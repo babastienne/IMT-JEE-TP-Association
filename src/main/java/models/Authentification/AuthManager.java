@@ -22,11 +22,7 @@ public class AuthManager {
 
     public static boolean checkToken(String token){
         EntityManager em = ENTITY.getEntity();
-
-
       //  String sql = "SELECT * FROM AUTHUSER WHERE AUTHUSER.TOKEN = '"+token+"'";
-
-
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<AuthUser> c = cb.createQuery(AuthUser.class);
