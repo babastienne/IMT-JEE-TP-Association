@@ -35,16 +35,24 @@ public class TokenChecker {
         boolean haveToken = false;
         if(cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("token")) {
+                if (cookie.getName().equals("authToken")) {
                     authCookie = cookie.getValue();
                     haveToken = true;
                 }
             }
         }
         try {
-            if (haveToken && AuthManager.checkToken(authCookie)) {
+            /*if (haveToken && AuthManager.checkToken(authCookie)) {
                 TokenChecker.renderConnected(request, response);
             } else {
+                TokenChecker.renderNotConnected(request, response);
+            }*/
+
+            System.out.println("cookie good: "+Boolean.toString(AuthManager.checkToken(authCookie)));
+            System.out.println(authCookie);
+            System.out.println("haveToken: "+Boolean.toString(haveToken));
+
+            if((!haveToken) && !AuthManager.checkToken(authCookie)){
                 TokenChecker.renderNotConnected(request, response);
             }
         }catch(Exception e){

@@ -1,3 +1,5 @@
+import models.Authentification.AuthManager;
+import servlets.AuthServlet;
 import servlets.util.TokenChecker;
 
 import javax.jws.WebService;
@@ -8,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import static models.Authentification.AuthManager.checkToken;
 
 @WebServlet("/hello")
 public class Hello extends HttpServlet {
@@ -33,7 +37,13 @@ public class Hello extends HttpServlet {
         out.println("<h1>URI : " +
 
                 request.getRequestURI() + "</h1>");
+
         out.println("<h1> Connection:"+request.getAttribute("isConnected")+ " </h1>");
+
+        boolean isChecked = AuthManager.checkToken(request.getParameter("authToken"));
+        System.out.println(request.getParameter("authToken"));
+
+        out.println("<h1> Token is valid: "+Boolean.toString(isChecked)+ " </h1>");
 
     }
 }

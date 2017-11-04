@@ -27,12 +27,17 @@ public class AuthServlet extends HttpServlet {
         String password =  request.getParameter("password");
         boolean isConnected = AuthManager.checkAuth(id, password);
         if(isConnected){
-            UID newToken = AuthManager.refreshToken(id);
-            Cookie token = new Cookie("authToken", newToken.toString());
+            String newToken = AuthManager.refreshToken(id);
+            Cookie token = new Cookie("authToken", newToken);
             response.addCookie(token);
+            request.setAttribute("isConnected", "true");
+
         }else{
             //TODO redirection vers une page d'erreur de connexion
+            request.setAttribute("isConnected", "false");
         }
+        RequestDispatcher rd =request.getRequestDispatcher("/hello");
+        rd.forward(request, response);
     }
 
 

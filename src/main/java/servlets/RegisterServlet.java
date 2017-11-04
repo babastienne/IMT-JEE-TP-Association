@@ -26,7 +26,7 @@ public class RegisterServlet extends HttpServlet {
         String password =  request.getParameter("password");
         AuthUser authUser = new AuthUser(id, password);
         ENTITY.create(authUser);
-        Cookie monCookie = new Cookie( "authToken", authUser.getToken().toString() );
+        Cookie monCookie = new Cookie( "authToken", authUser.getToken());
         String firstname = request.getParameter("name");
         String lastname = request.getParameter("family-name");
         String address = request.getParameter("address");

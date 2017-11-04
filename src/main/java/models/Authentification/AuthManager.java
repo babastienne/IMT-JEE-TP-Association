@@ -16,7 +16,6 @@ public class AuthManager {
 
     public static boolean checkAuth(String id, String password){
         EntityManager em = ENTITY.getEntity();
-        System.out.println("IIIDDD "+id);
         AuthUser authUser = em.find(AuthUser.class, id);
         return authUser.checkPassword(password);
     }
@@ -28,14 +27,14 @@ public class AuthManager {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<AuthUser> c = cb.createQuery(AuthUser.class);
         Root<AuthUser> authUser = c.from(AuthUser.class);
-        c.select(authUser)
-                .where( cb.equal( authUser.get("token"), token ) );
+        c.select(authUser).where( cb.equal( authUser.get("token"), token ) );
         Query query = em.createQuery( c ) ;
         List list = query.getResultList();
+        System.out.println(list.size());
         return !list.isEmpty();
     }
 
-    public static UID refreshToken(String id){
+    public static String refreshToken(String id){
         EntityManager em = ENTITY.getEntity();
         AuthUser authUser = em.find(AuthUser.class, id);
         return authUser.refreshToken();

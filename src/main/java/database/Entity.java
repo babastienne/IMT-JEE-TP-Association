@@ -12,7 +12,6 @@ public class Entity {
 
     private EntityManager entityManager;
 
-
     public EntityManager getEntity(){
         if(this.entityManager != null){  // i don't know if java use lazy valuation (avoid null pointer exception)
             if(this.entityManager.isOpen()){
@@ -37,5 +36,6 @@ public class Entity {
         this.getEntity().getTransaction().begin();
         this.getEntity().merge(object);
         this.getEntity().getTransaction().commit();
+
     }
 }
