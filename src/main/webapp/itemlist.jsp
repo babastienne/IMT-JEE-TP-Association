@@ -35,7 +35,9 @@
             <td><c:out value = "${item.getName()}"/></td>
             <td><c:out value = "${item.getPrice()}"/></td>
             <td><c:out value = "${item.getStock()}"/></td>
-            <td><a class="btn btn-outline-primary ml-sm-2" href="/commandlist/add?name=${item.getName()}">Commander</a></td>
+
+
+            <td><a class="btn btn-outline-primary ml-sm-2 <c:if test="${item.getStock() == 0}">btn-outline-secondary disabled</c:if>" href="/commandlist/add?name=${item.getName()}">Commander</a></td>
         </tr>
     </c:forEach>
     </table>
