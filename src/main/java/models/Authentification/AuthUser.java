@@ -1,11 +1,13 @@
 package models.Authentification;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.Id;
+import models.ServiceUser;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.rmi.server.UID;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 
 import static database.Entity.ENTITY;
 
@@ -14,14 +16,17 @@ public class AuthUser {
 
     @Id
     private String id;
-    private UID token;
+    private String token;
     private String hashPassword;
+    @OneToOne(fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
+    private ServiceUser serviceUser;
 
-    public AuthUser(){}
+  //  public AuthUser(){}
 
     public AuthUser(String id, String password){
-        this();
-        this.token = new UID();
+       // this();
+        this.token = UUID.randomUUID().toString().replaceAll("-", "");
         this.id = id;
         try {
             this.hashPassword = toHash(password);
@@ -31,11 +36,19 @@ public class AuthUser {
         }
     }
 
-    public UID getToken() {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getToken() {
         return token;
     }
 
-    public void setToken(UID token) {
+    public void setToken(String token) {
         this.token = token;
     }
 
@@ -71,13 +84,13 @@ public class AuthUser {
             System.err.println("Erreur dans la generation du hash MD5 du mot de passe");
             e.printStackTrace();
         }
+        System.out.println("password good or not: "+Boolean.toString(checked));
         return checked;
     }
 
-    public UID refreshToken(){
-        EntityManager em = ENTITY.getEntity();
-        this.token = new UID();
-        em.getTransaction().commit();
+    public String refreshToken(){
+        this.token =  UUID.randomUUID().toString().replaceAll("-", "");
+        ENTITY.update(this);
         return this.token;
     }
 

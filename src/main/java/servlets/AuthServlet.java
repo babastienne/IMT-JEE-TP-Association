@@ -3,6 +3,7 @@ package servlets;
 import database.Entity;
 import models.Authentification.AuthManager;
 import models.Authentification.AuthUser;
+import models.ServiceUser;
 
 import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
@@ -22,33 +23,26 @@ public class AuthServlet extends HttpServlet {
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
+        String id = request.getParameter("email");
         String password =  request.getParameter("password");
         boolean isConnected = AuthManager.checkAuth(id, password);
         if(isConnected){
-            UID newToken = AuthManager.refreshToken(id);
-            Cookie token = new Cookie("authToken", newToken.toString());
+            String newToken = AuthManager.refreshToken(id);
+            Cookie token = new Cookie("authToken", newToken);
             response.addCookie(token);
+            request.setAttribute("isConnected", "true");
+
         }else{
             //TODO redirection vers une page d'erreur de connexion
+            request.setAttribute("isConnected", "false");
         }
+        RequestDispatcher rd =request.getRequestDispatcher("/hello");
+        rd.forward(request, response);
     }
 
-   /* CE BOUT DE CODE CORRESPOND A L'INSCRIPTION D'UN USER
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
-        String password =  request.getParameter("password");
-        AuthUser authUser = new AuthUser(id, password);
-        String token = authUser.getToken().toString();
-        EntityManager em = ENTITY.getEntity();
-        em.merge(authUser);
-        em.getTransaction().commit();
-        Cookie monCookie = new Cookie( "authToken",  );
-        response.addCookie(monCookie);
-    }
-*/
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("/jsp/authentification/auth_page.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/jsp/index.jsp"); // TODO TO CHANGE
         rd.forward(request, response);
     }
 }

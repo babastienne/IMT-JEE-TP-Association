@@ -3,6 +3,7 @@ package database;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.Objects;
 
 public class Entity {
 
@@ -10,7 +11,6 @@ public class Entity {
 
 
     private EntityManager entityManager;
-
 
     public EntityManager getEntity(){
         if(this.entityManager != null){  // i don't know if java use lazy valuation (avoid null pointer exception)
@@ -24,5 +24,18 @@ public class Entity {
             return em;
         }
         return null;
+    }
+
+    public void create(Object object){
+        this.getEntity().getTransaction().begin();
+        this.getEntity().persist(object);
+        this.getEntity().getTransaction().commit();
+    }
+
+    public void update(Object object){
+        this.getEntity().getTransaction().begin();
+        this.getEntity().merge(object);
+        this.getEntity().getTransaction().commit();
+
     }
 }
