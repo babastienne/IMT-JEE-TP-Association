@@ -18,7 +18,7 @@ import java.rmi.server.UID;
 
 import static database.Entity.ENTITY;
 
-@WebServlet(name = "AuthServlet", urlPatterns = "/auth")
+@WebServlet(name = "AuthServlet", urlPatterns = {"/login"})
 public class AuthServlet extends HttpServlet {
 
 
