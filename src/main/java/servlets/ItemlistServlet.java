@@ -2,12 +2,12 @@ package servlets;
 
 import database.Entity;
 import models.Item;
+import servlets.util.TokenChecker;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -31,6 +31,7 @@ public class ItemlistServlet extends HttpServlet {
     }
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        TokenChecker.checkConnection(request,response);
         String path = request.getServletPath();
         EntityManager em= ENTITY.getEntity();
         switch (path){
