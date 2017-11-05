@@ -26,18 +26,30 @@
 <div class="container">
     <table class="table">
         <thead>
+            <th>Code</th>
             <th>Nom</th>
             <th>Prix</th>
             <th>Stock</th>
         </thead>
     <c:forEach items="${listItems}" var="item">
         <tr>
-            <td><c:out value = "${item.getName()}"/></td>
-            <td><c:out value = "${item.getPrice()}"/></td>
-            <td><c:out value = "${item.getStock()}"/></td>
+            <form action="/itemlist/add" method="post">
 
+                <td><c:out value ="${item.getId()}"/></td>
+                <td><c:out value = "${item.getName()}"/></td>
+                <td><c:out value = "${item.getPrice()}"/></td>
+                <td>
+                    <div class="row">
+                        <c:if test="${item.getStock() != 0}">
+                            <input class="form-control form-control-sm col-lg-4" name="quantity" type="number" min="0" max="${item.getStock()}" required value="1"> /
+                        </c:if>
+                        <c:out value = "${item.getStock()}"/>
+                    </div>
+                </td>
+                <input type="hidden" name="code" value ="${item.getId()}"/>
 
-            <td><a class="btn btn-outline-primary ml-sm-2 <c:if test="${item.getStock() == 0}">btn-outline-secondary disabled</c:if>" href="/commandlist/add?name=${item.getName()}">Commander</a></td>
+                <td><input type="submit" class="btn btn-outline-primary ml-sm-2 <c:if test="${item.getStock() == 0}">btn-outline-secondary disabled</c:if>" value="Commander"/></td>
+            </form>
         </tr>
     </c:forEach>
     </table>
