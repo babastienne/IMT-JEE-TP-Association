@@ -24,35 +24,32 @@
 
 
 <div class="container">
+    <c:if test="${not empty orderLines}">
+        <form method="post" action="/command">
+            <input type="submit" class="btn btn-outline-danger ml-sm-2" value="Annuler la commande"/>
+        </form>
+    </c:if>
     <table class="table">
         <thead>
             <th>Code Article</th>
             <th>Nom</th>
             <th>Prix</th>
-            <th>Stock</th>
+            <th>Quantité</th>
         </thead>
-    <c:forEach items="${listItems}" var="item">
+    <c:forEach items="${orderLines}" var="orderLine">
         <tr>
-            <form action="/itemlist" method="post">
-
-                <td><c:out value ="${item.getId()}"/></td>
-                <td><c:out value = "${item.getName()}"/></td>
-                <td><c:out value = "${item.getPrice()}"/></td>
-                <td>
-                    <div class="row">
-                        <c:if test="${item.getStock() != 0}">
-                            <input class="form-control form-control-sm col-lg-4" name="quantity" type="number" min="0" max="${item.getStock()}" required value="1"> /
-                        </c:if>
-                        <c:out value = "${item.getStock()}"/>
-                    </div>
-                </td>
-                <input type="hidden" name="code" value ="${item.getId()}"/>
-
-                <td><input type="submit" class="btn btn-outline-primary ml-sm-2 <c:if test="${item.getStock() == 0}">btn-outline-secondary disabled</c:if>" value="Commander"/></td>
-            </form>
+            <td><c:out value ="${orderLine.getIdItem()}"/></td>
+            <td><c:out value = "${orderLine.getNameItem()}"/></td>
+            <td><c:out value = "${orderLine.getPriceItem()}"/></td>
+            <td><c:out value = "${orderLine.getQuantityItem()}"/></td>
         </tr>
     </c:forEach>
     </table>
+    <c:if test="${not empty orderLines}">
+        <form method="post" action="/command">
+            <input type="submit" class="btn btn-outline-danger ml-sm-2" value="Annuler la commande"/>
+        </form>
+    </c:if>
 </div>
 
 

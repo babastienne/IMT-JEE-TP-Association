@@ -1,5 +1,7 @@
 package models.Authentification;
 
+import database.Entity;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -44,5 +46,18 @@ public class AuthManager {
         EntityManager em = ENTITY.getEntity();
         AuthUser authUser = em.find(AuthUser.class, id);
         return authUser.refreshToken();
+    }
+
+    public static String getUID(String token){
+        EntityManager em = ENTITY.getEntity();
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<AuthUser> c = cb.createQuery(AuthUser.class);
+        Root<AuthUser> authUser = c.from(AuthUser.class);
+        c.select(authUser).where(cb.equal(authUser.get("token"), token));
+        Query query = em.createQuery( c ) ;
+        List<AuthUser> list = (List<AuthUser>) query.getResultList();
+        return list.get(0).getId();
+
     }
 }
