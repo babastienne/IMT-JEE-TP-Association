@@ -20,6 +20,7 @@
         <div class="text-center">
             <h2> Inscrivez-vous à la vegassociation </h2>
             <p>Les champs marqué du caractère (*) doivent obligatoirement être remplis pour pouvoir finaliser l'inscription.</p>
+            <p>Si vous possédez déjà un compte sur notre site internet, cliquez ici pour <a href="login">retourner à la page de connexion</a>.</p>
             <br/>
         </div>
         <form class="container-fluid align-items-center" style="max-width: 350px; min-width: 350px; margin-bottom: 5%;" method="POST" action=>

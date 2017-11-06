@@ -38,9 +38,9 @@
             <button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
         </form>
 
-        <div class="row">
-            <a class="col" href="register">S'inscrire</a>
-            <a class="col" href="">Mot de passe oublié</a>
+        <div>
+        	<br/>
+            <p>Si vous ne possédez pas d'identifiants pour vous connecter sur notre site internet, cliquez ici pour <a href="register">créer un compte</a>.</p>
         </div>
     </div>
 

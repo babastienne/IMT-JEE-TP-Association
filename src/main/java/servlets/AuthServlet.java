@@ -42,7 +42,7 @@ public class AuthServlet extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("/jsp/index.jsp"); // TODO TO CHANGE
+        RequestDispatcher rd = request.getRequestDispatcher("/login.jsp"); // TODO TO CHANGE
         rd.forward(request, response);
     }
 }
