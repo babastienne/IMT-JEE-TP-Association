@@ -52,10 +52,6 @@
                 <input class="form-control" type ="text" name="city" value="" id="city" placeholder="Clichy"/>
             </div>
 
-            <div class="form-group">
-                <select class="form-control bfh-countries" data-country="US"></select>
-            </div>
-
             <button class="btn btn-lg btn-primary btn-block" type="submit">Inscription</button>
 
         </form>
