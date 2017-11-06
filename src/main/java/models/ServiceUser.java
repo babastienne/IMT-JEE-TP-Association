@@ -13,7 +13,8 @@ import javax.persistence.*;
 public class ServiceUser {
 
     @Id
-    private UID uid;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     
     @Column(name="firstName", nullable=false)
     private String firstName;
@@ -48,7 +49,6 @@ public class ServiceUser {
 
     public ServiceUser(String firstname, String lastname, String identifiant, String address, int zip, String city){
         this();
-        this.uid = new UID();
         this.firstName = firstname;
         this.lastName = lastname;
        //this.authUser = authUser;
@@ -59,12 +59,12 @@ public class ServiceUser {
 
     }
 
-    public UID getUid() {
-        return uid;
+    public long getUid() {
+        return id;
     }
 
-    public void setUid(UID uid) {
-        this.uid = uid;
+    public void setUid(long id) {
+        this.id = id;
     }
 
     public AuthUser getAuthUser() {
