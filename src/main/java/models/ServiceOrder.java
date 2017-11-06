@@ -10,12 +10,16 @@ public class ServiceOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long orderId;
 
     @OneToOne
     private ServiceUser user;
 
-    @OneToMany(mappedBy = "id")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "add_item", catalog = "associationdb", joinColumns = {
+            @JoinColumn(name = "ORDER_ID", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "ITEM_ID",
+                    nullable = false, updatable = false) })
     private List<Item> items;
 
 
