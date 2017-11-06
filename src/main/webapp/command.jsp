@@ -23,6 +23,11 @@
 <%@include file="jsp/partials/navbar.jspf"%>
 
 
+<!-- name : orderLine.getItem().getName() ; id: orderLine.getItem().getId(); price : orderLine.getItem().getPrice()
+
+orderLine.getQuantityItem() -->
+
+
 <div class="container">
     <c:if test="${not empty orderLines}">
         <form method="post" action="/command">
@@ -38,9 +43,9 @@
         </thead>
     <c:forEach items="${orderLines}" var="orderLine">
         <tr>
-            <td><c:out value ="${orderLine.getIdItem()}"/></td>
-            <td><c:out value = "${orderLine.getNameItem()}"/></td>
-            <td><c:out value = "${orderLine.getPriceItem()}"/></td>
+            <td><c:out value ="${orderLine.getItem().getId()}"/></td>
+            <td><c:out value = "${orderLine.getItem().getName()}"/></td>
+            <td><c:out value = "${orderLine.getItem().Price()}"/></td>
             <td><c:out value = "${orderLine.getQuantityItem()}"/></td>
         </tr>
     </c:forEach>

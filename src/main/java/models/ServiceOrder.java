@@ -1,7 +1,10 @@
 package models;
 
+import com.sun.tools.corba.se.idl.constExpr.Or;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Entity
@@ -15,8 +18,8 @@ public class ServiceOrder {
     @OneToOne
     private ServiceUser user;
 
-    @OneToMany(mappedBy = "id")
-    private List<Item> items;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+    private List<OrderLine> orderLines;
 
 
     public ServiceOrder(){}
@@ -33,13 +36,25 @@ public class ServiceOrder {
         this.user = user;
     }
 
-    public void addItem(Item item){
-        this.items.add(item);
+    public void addItem(Item item, int quantity){
+        OrderLine orderLine = new OrderLine(item, this, quantity);
+        this.orderLines.add(orderLine);
     }
 
-    public List<Item> getItems(){
-        return this.items;
+    public List<OrderLine> getOrders(){
+        return this.orderLines;
     }
+    public HashMap<Item, Integer> getItems(){
+        HashMap<Item, Integer> itemsOrdered = new HashMap<>();
+        for(OrderLine ol : this.orderLines){
+            itemsOrdered.put(ol.getItem(), ol.getQuantityItem());
+        }
+        return itemsOrdered;
+    }
+
+   // public List<Item> getItems(){
+   //     return this.orderLines;
+   // }
 
 
 }
