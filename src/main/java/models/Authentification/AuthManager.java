@@ -25,6 +25,7 @@ public class AuthManager {
 //        Root<AuthUser> authUserRoot = c.from(AuthUser.class);
 //        c.select(authUserRoot).where(cb.equal(authUserRoot.get()))
         AuthUser authUser = em.find(AuthUser.class, id);
+
         return authUser.checkPassword(password);
     }
 
@@ -71,6 +72,9 @@ public class AuthManager {
                 selectedAuthUser=user;
             }
         }
+
+
+        System.out.println("SSZZJOIJEREI "+selectedAuthUser.getToken());
 
 
 

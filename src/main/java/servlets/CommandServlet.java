@@ -47,6 +47,7 @@ public class CommandServlet extends HttpServlet {
                     authCookie = cookie.getValue();
                 }
             }
+        System.out.println("eoihfeoiiegr "+authCookie);
         c.select(e).where(cb.equal(e.get("orderId"), AuthManager.getUID(authCookie)));
         Query query = em.createQuery(c);
         List<ServiceOrder> list = (List<ServiceOrder>) query.getResultList();
