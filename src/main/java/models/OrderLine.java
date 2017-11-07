@@ -58,5 +58,9 @@ public class OrderLine {
         return this.quantityItem;
     }
 
+    public void setQuantityItem(int quantityItem){
+        this.quantityItem = quantityItem;
+    }
+
 
 }
