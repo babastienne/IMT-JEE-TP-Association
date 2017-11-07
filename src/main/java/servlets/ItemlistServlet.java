@@ -52,11 +52,13 @@ public class ItemlistServlet extends HttpServlet {
 
             OrderLine ol = null;
             boolean isAlreadyIn = false;
-            for (OrderLine i : serviceOrder.getOrders()) {
-                if (i.getItem().getId() == item.getId()) {
-                    isAlreadyIn = true;
-                    ol = i;
-                    break;
+            if(serviceOrder.getOrders() != null && !serviceOrder.getOrders().isEmpty() ){
+                for (OrderLine i : serviceOrder.getOrders()) {
+                    if (i.getItem().getId() == item.getId()) {
+                        isAlreadyIn = true;
+                        ol = i;
+                        break;
+                    }
                 }
             }
 
