@@ -108,6 +108,12 @@ public class ServiceUser {
         this.authUser = authUser;
     }
 
+    public void setOrder(ServiceOrder order) {
+        this.order = order;
+    }
+
+
+
     public String getFirstname() {
         return firstName;
     }

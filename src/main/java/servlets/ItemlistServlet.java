@@ -6,6 +6,11 @@ import models.OrderLine;
 import models.ServiceOrder;
 import models.ServiceUser;
 import servlets.util.TokenChecker;
+import static database.Entity.ENTITY;
+
+import java.io.IOException;
+import java.util.List;
+
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -18,10 +23,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
 
-import static database.Entity.ENTITY;
+import models.Item;
+import servlets.util.TokenChecker;
 
 /**
  * Servlet s'occupant d'afficher la liste des articles disponibles

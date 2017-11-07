@@ -1,17 +1,14 @@
-import models.Authentification.AuthManager;
-import servlets.AuthServlet;
-import servlets.util.TokenChecker;
+import java.io.IOException;
+import java.io.PrintWriter;
 
-import javax.jws.WebService;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 
-import static models.Authentification.AuthManager.checkToken;
+import models.Authentification.AuthManager;
+import servlets.util.TokenChecker;
 
 @WebServlet("/hello")
 public class Hello extends HttpServlet {
