@@ -1,28 +1,41 @@
 package models;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Classe modélisant une commande
+ */
 @Entity
 public class ServiceOrder {
 
-
+    /**
+     * numéro de la commande
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long orderId;
 
+    /**
+     * Lien vers l'utilisateur qui a fait la commande
+     */
     @OneToOne
     private ServiceUser user;
 
-
+    /**
+     * Liste d'ajout d'article
+     */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
     private List<OrderLine> orderLines;
 
     public ServiceOrder(){}
 
-    public ServiceOrder(ServiceUser user, Date date){
+    /**
+     * Constructeur
+     * @param user objet de l'utilisateur
+     */
+    public ServiceOrder(ServiceUser user){
         this.user = user;
     }
 
@@ -34,14 +47,18 @@ public class ServiceOrder {
         this.user = user;
     }
 
-    public void addItem(Item item, int quantity){
-        OrderLine orderLine = new OrderLine(item, this, quantity);
-        this.orderLines.add(orderLine);
-    }
-
+    /**
+     * Récupére la liste des ajouts d'article dans la commande
+     * @return liste d'ajout d'article
+     */
     public List<OrderLine> getOrders(){
         return this.orderLines;
     }
+
+    /**
+     * Récupére l'ensemble des articles commandés ainsi que leur quantité
+     * @return dictionnaire article quantité
+     */
     public HashMap<Item, Integer> getItems(){
         HashMap<Item, Integer> itemsOrdered = new HashMap<>();
         for(OrderLine ol : this.orderLines){
@@ -50,9 +67,6 @@ public class ServiceOrder {
         return itemsOrdered;
     }
 
-   // public List<Item> getItems(){
-   //     return this.orderLines;
-   // }
 
 
 }

@@ -3,7 +3,6 @@ package servlets;
 import models.Authentification.AuthUser;
 import models.ServiceUser;
 
-import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,12 +18,15 @@ import static database.Entity.ENTITY;
  * Created by SELIMFIXE on 03/11/2017.
  */
 
+/**
+ * Servlet s'occupant de la partie inscription
+ */
 @WebServlet(name = "RegisterServlet", urlPatterns = "/register")
 public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("email");
         String password =  request.getParameter("password");
-        AuthUser authUser = new AuthUser(id, password);
+        AuthUser authUser = new AuthUser(id, password); // Création de l'AuthUser
         ENTITY.create(authUser);
         Cookie monCookie = new Cookie( "authToken", authUser.getToken());
         String firstname = request.getParameter("name");
@@ -35,15 +37,13 @@ public class RegisterServlet extends HttpServlet {
         String identifiant = request.getParameter("email");
 
         ServiceUser user = new ServiceUser(firstname, lastname, identifiant, address, zip, city);
-        ENTITY.create(user);
+        ENTITY.create(user); //Création du ServiceUser
         user.setAuthUser(authUser);
         ENTITY.update(user);
-        authUser.setServiceUser(user);
+        authUser.setServiceUser(user); // Lien entre ServiceUser et AuthUser
         ENTITY.update(authUser);
         response.addCookie(monCookie);
-        request.setAttribute("isConnected", "true");
-        RequestDispatcher rd = request.getRequestDispatcher("/hello");
-        rd.forward(request, response);
+        response.sendRedirect("/login.jsp");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

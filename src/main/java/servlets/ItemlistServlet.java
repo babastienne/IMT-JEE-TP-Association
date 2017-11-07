@@ -1,6 +1,5 @@
 package servlets;
 
-import database.Entity;
 import models.Item;
 import servlets.util.TokenChecker;
 
@@ -20,11 +19,16 @@ import java.util.List;
 
 import static database.Entity.ENTITY;
 
+/**
+ * Servlet s'occupant d'afficher la liste des articles disponibles
+ */
 @WebServlet(name = "ItemlistServlet", urlPatterns = {"/itemlist"})
 public class ItemlistServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         TokenChecker.checkConnection(request,response);
         EntityManager em= ENTITY.getEntity();
+
+        // Ajout d'article dans la commande
         String code = request.getParameter("code");
         String quantity = request.getParameter("quantity");
         Item item = em.find(Item.class, Long.parseLong(code));
@@ -36,6 +40,8 @@ public class ItemlistServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         TokenChecker.checkConnection(request,response);
         EntityManager em= ENTITY.getEntity();
+
+        //Récupération de l'ensemble des articles disponibles
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Item> c = cb.createQuery(Item.class);
         Root<Item> e = c.from(Item.class);

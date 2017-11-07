@@ -1,29 +1,47 @@
 package models.Authentification;
 
 import models.ServiceUser;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.rmi.server.UID;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 import static database.Entity.ENTITY;
 
+/**
+ * Classe gérant la partie authentification de l'utilisateur
+ */
 @Entity
 public class AuthUser {
 
+    /**
+     * Email de l'utilisateur. Clé primaire dans la DB
+     */
     @Id
     private String id;
+    /**
+     * Token d'authentification. Pour éviter de se reconnecter à chaque fois
+     */
     private String token;
+    /**
+     * Mot de passe hashé en md5
+     */
     private String hashPassword;
+    /**
+     * Lien vers le ServiceUser (modèle métier de l'utilisateur) correspondant à l'AuthUser
+     */
     @OneToOne(fetch = FetchType.LAZY)
     private ServiceUser serviceUser;
 
 
-  public AuthUser(){}
+    public AuthUser(){}
 
+    /**
+     * Constructeur
+     * @param id email
+     * @param password mot de passe
+     */
     public AuthUser(String id, String password){
         this.token = UUID.randomUUID().toString().replaceAll("-", "");
         this.id = id;
@@ -34,6 +52,7 @@ public class AuthUser {
             e.printStackTrace();
         }
     }
+
 
     public ServiceUser getServiceUser() {
         return serviceUser;
@@ -67,6 +86,12 @@ public class AuthUser {
         this.hashPassword = hashPassword;
     }
 
+    /**
+     * Fonction permettant de hasher une chaine de charactère via md5
+     * @param str chaine de charactère
+     * @return valeur hashée
+     * @throws NoSuchAlgorithmException
+     */
     private String toHash(String str) throws NoSuchAlgorithmException {
         StringBuffer hexString = new StringBuffer();
         MessageDigest md = MessageDigest.getInstance("MD5");
@@ -83,6 +108,12 @@ public class AuthUser {
         return hexString.toString();
     }
 
+
+    /**
+     * Vérifie si le mot de passe soumis correspond au mot de passe de l'utilisateur
+     * @param password mot de passe
+     * @return True si c'est bon
+     */
     public boolean checkPassword(String password){
         boolean checked = false;
         try{
@@ -94,6 +125,10 @@ public class AuthUser {
         return checked;
     }
 
+    /**
+     * Regénère un token
+     * @return nouveau token
+     */
     public String refreshToken(){
         this.token =  UUID.randomUUID().toString().replaceAll("-", "");
         ENTITY.update(this);

@@ -1,33 +1,45 @@
 package models;
 
 import javax.persistence.*;
-import javax.persistence.criteria.Order;
 
-
+/**
+ * Classe permettant de faire la jointure OneToMany entre ServiceOrder et Item
+ */
 @Entity
 public class OrderLine {
 
+    /**
+     * identifiant de la orderline
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long orderLineId;
 
+    /**
+     * Lien vers l'article concerné
+     */
     @OneToOne
     private Item item;
 
+    /**
+     * Lien vers la commande concerné
+     */
     @ManyToOne
     private ServiceOrder order;
 
-    //private long idItem;
-    //private String nameItem;
-    //private float priceItem;
+    /**
+     * Quantité commandé
+     */
     private int quantityItem;
 
     public OrderLine(){}
 
-   // public OrderLine(long p_idItem, String p_nameItem, float p_priceItem, int p_quantityItem){
-        //this.idItem = p_idItem;
-        //this.nameItem = p_nameItem;
-        //this.priceItem = p_priceItem;
+    /**
+     * Constructeur
+     * @param item objet de l'article
+     * @param order objet de la commande
+     * @param p_quantityItem quantité commandé
+     */
     public OrderLine(Item item, ServiceOrder order, int p_quantityItem){
         this.item = item;
         this.order = order;
@@ -46,20 +58,5 @@ public class OrderLine {
         return this.quantityItem;
     }
 
-   // public long getIdItem() {
-   //     return idItem;
-    //}
 
-
-   /* public String getNameItem() {
-        return nameItem;
-    }
-
-    public float getPriceItem() {
-        return priceItem;
-    }
-    public int getQuantityItem() {
-        return quantityItem;
-    }
-*/
 }

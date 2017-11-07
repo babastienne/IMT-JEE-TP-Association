@@ -28,6 +28,9 @@ import java.util.List;
 
 import static database.Entity.ENTITY;
 
+/**
+ * Servlet s'occupant d'afficher la liste des articles de la commande
+ */
 @WebServlet(name = "CommandServlet", urlPatterns = {"/command"})
 public class CommandServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,6 +40,8 @@ public class CommandServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         TokenChecker.checkConnection(request,response);
         EntityManager em= ENTITY.getEntity();
+
+        //Récuperation du token
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<ServiceOrder> c = cb.createQuery(ServiceOrder.class);
         Root<ServiceOrder> e = c.from(ServiceOrder.class);
@@ -47,13 +52,16 @@ public class CommandServlet extends HttpServlet {
                     authCookie = cookie.getValue();
                 }
             }
+
+        // Récupération de l'objet ServiceOrder avec numéro d'utilisateur
         c.select(e).where(cb.equal(e.get("orderId"), AuthManager.getUID(authCookie)));
         Query query = em.createQuery(c);
         List<ServiceOrder> list = (List<ServiceOrder>) query.getResultList();
         ServiceOrder order = list.get(0);
+
+        // Récupération des ajouts d'article lié à la commande
         List<OrderLine> orderLines = order.getOrders();
         request.setAttribute("listItems", orderLines);
-
         request.setAttribute("orderLines", orderLines);
         String destination = "command.jsp";
         RequestDispatcher rd = request.getRequestDispatcher(destination);
