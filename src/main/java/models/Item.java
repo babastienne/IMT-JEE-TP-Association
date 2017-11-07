@@ -37,11 +37,11 @@ public class Item {
 
 
 	public long getId() {
-		return id;
+		return this.itemId;
 	}
 
 	public void setId(long id) {
-		this.id = id;
+		this.itemId = id;
 	}
 
 	public double getPrice() {

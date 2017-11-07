@@ -59,17 +59,26 @@ public class AuthManager {
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<AuthUser> c = cb.createQuery(AuthUser.class);
-        Root<AuthUser> authUserRoot = c.from(AuthUser.class);
-        c.select(authUserRoot).where(cb.equal(authUserRoot.get("token"), token));
+        Root<AuthUser> authUser = c.from(AuthUser.class);
+        //c.select(authUser).where( cb.equal( authUser.get("token"), token ) );
+        c.select(authUser);
         Query query = em.createQuery( c ) ;
         List<AuthUser> list = (List<AuthUser>) query.getResultList();
-        AuthUser authUser = list.get(0);
+        System.out.println(list.size());
+        AuthUser selectedAuthUser = null;
+        for(AuthUser user : list){
+            if(user.getToken().equals(token)){
+                selectedAuthUser=user;
+            }
+        }
+
+
 
         cb = em.getCriteriaBuilder();
         CriteriaBuilder cb2 = em.getCriteriaBuilder();
         CriteriaQuery<ServiceUser> c2 = cb2.createQuery(ServiceUser.class);
         Root<ServiceUser> userRoot = c2.from(ServiceUser.class);
-        c2.select(userRoot).where(cb2.equal(userRoot.get("authUser"),authUser));
+        c2.select(userRoot).where(cb2.equal(userRoot.get("authUser"), selectedAuthUser));
         Query query2 = em.createQuery(c2);
         List<ServiceUser> list2 = (List<ServiceUser>) query2.getResultList();
         ServiceUser serviceUser = list2.get(0);

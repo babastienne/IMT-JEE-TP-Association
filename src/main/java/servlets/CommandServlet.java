@@ -47,12 +47,12 @@ public class CommandServlet extends HttpServlet {
                     authCookie = cookie.getValue();
                 }
             }
-        c.select(e).where(cb.equal(e.get("user_id"), AuthManager.getUID(authCookie)));
+        c.select(e).where(cb.equal(e.get("orderId"), AuthManager.getUID(authCookie)));
         Query query = em.createQuery(c);
         List<ServiceOrder> list = (List<ServiceOrder>) query.getResultList();
-        ServiceOrder obj = list.get(0);
-        List<OrderLine> orderLines = obj.getOrders();
-
+        ServiceOrder order = list.get(0);
+        List<OrderLine> orderLines = order.getOrders();
+        request.setAttribute("listItems", orderLines);
 
 
 
