@@ -44,16 +44,10 @@ public class CommandServlet extends HttpServlet {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<ServiceOrder> c = cb.createQuery(ServiceOrder.class);
             Root<ServiceOrder> e = c.from(ServiceOrder.class);
-            String authCookie = "";
-            Cookie[] cookies = request.getCookies();
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("authToken")) {
-                    authCookie = cookie.getValue();
-                }
-            }
+            String authSession = (String) request.getSession().getAttribute("authToken");
 
             // Récupération de l'objet ServiceOrder avec numéro d'utilisateur
-            c.select(e).where(cb.equal(e.get("orderId"), AuthManager.getUID(authCookie)));
+            c.select(e).where(cb.equal(e.get("orderId"), AuthManager.getUID(authSession)));
             Query query = em.createQuery(c);
             List<ServiceOrder> list = (List<ServiceOrder>) query.getResultList();
             ServiceOrder order = list.get(0);

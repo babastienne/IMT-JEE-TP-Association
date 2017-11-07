@@ -4,10 +4,7 @@ import models.Authentification.AuthManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 
@@ -23,9 +20,9 @@ public class AuthServlet extends HttpServlet {
         String password =  request.getParameter("password");
         boolean isConnected = AuthManager.checkAuth(id, password); //vérification des paramètres de connexion
         if(isConnected){
+            HttpSession session = request.getSession();
             String newToken = AuthManager.refreshToken(id); //mise en place d'un token dans les cookies
-            Cookie token = new Cookie("authToken", newToken);
-            response.addCookie(token);
+            session.setAttribute("authToken", newToken);
             response.sendRedirect("/itemlist");
 
         }else{
