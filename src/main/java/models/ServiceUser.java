@@ -15,22 +15,22 @@ public class ServiceUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    
+
     @Column(name="firstName", nullable=false)
     private String firstName;
-    
+
     @Column(name="lastName", nullable=false)
     private String lastName;
-    
+
     @Column(name="identifiant", nullable=false, unique=true)
     private String identifiant;
-    
+
     @Column(name="adress", nullable=true)
     private String address;
-    
+
     @Column(name="zip", nullable=true)
     private int zip;
-    
+
     @Column(name="city", nullable=true)
     private String city;
 
@@ -51,7 +51,7 @@ public class ServiceUser {
         this();
         this.firstName = firstname;
         this.lastName = lastname;
-       //this.authUser = authUser;
+        //this.authUser = authUser;
         this.identifiant = identifiant;
         this.address = address;
         this.zip = zip;
@@ -90,40 +90,40 @@ public class ServiceUser {
     public void setLastname(String lastname) {
         this.lastName = lastname;
     }
-    
+
     public String getIdentifiant() {
-		return identifiant;
-	}
+        return identifiant;
+    }
 
-	public void setIdentifiant(String identifiant) {
-		this.identifiant = identifiant;
-	}
+    public void setIdentifiant(String identifiant) {
+        this.identifiant = identifiant;
+    }
 
-	public String getAdress() {
-		return address;
-	}
+    public String getAdress() {
+        return address;
+    }
 
-	public void setAdress(String adress) {
-		this.address = adress;
-	}
+    public void setAdress(String adress) {
+        this.address = adress;
+    }
 
-	public int getZip() {
-		return zip;
-	}
+    public int getZip() {
+        return zip;
+    }
 
-	public void setZip(int zip) {
-		this.zip = zip;
-	}
+    public void setZip(int zip) {
+        this.zip = zip;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public ServiceOrder getOrder(){
+    public ServiceOrder getOrder(){
         return this.order;
     }
 
@@ -138,5 +138,3 @@ public class ServiceUser {
         this.order = order;
     }
 }
-
-

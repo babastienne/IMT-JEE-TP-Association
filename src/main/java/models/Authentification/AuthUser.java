@@ -19,8 +19,10 @@ public class AuthUser {
     private String token;
     private String hashPassword;
     @OneToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
     private ServiceUser serviceUser;
+
+
+  public AuthUser(){}
 
     public AuthUser(String id, String password){
         this.token = UUID.randomUUID().toString().replaceAll("-", "");

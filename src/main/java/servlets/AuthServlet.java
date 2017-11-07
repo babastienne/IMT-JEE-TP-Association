@@ -36,13 +36,13 @@ public class AuthServlet extends HttpServlet {
             //TODO redirection vers une page d'erreur de connexion
             request.setAttribute("isConnected", "false");
         }
-        RequestDispatcher rd =request.getRequestDispatcher("/hello");
-        rd.forward(request, response);
+       // RequestDispatcher rd =request.getRequestDispatcher("/itemlist");
+        response.sendRedirect("/itemlist");
     }
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("/jsp/index.jsp"); // TODO TO CHANGE
+        RequestDispatcher rd = request.getRequestDispatcher("/login.jsp"); // TODO TO CHANGE
         rd.forward(request, response);
     }
 }

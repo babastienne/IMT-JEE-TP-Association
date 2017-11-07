@@ -1,5 +1,8 @@
 package models.Authentification;
 
+import database.Entity;
+import models.ServiceUser;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -16,6 +19,11 @@ public class AuthManager {
 
     public static boolean checkAuth(String id, String password){
         EntityManager em = ENTITY.getEntity();
+
+//        CriteriaBuilder cb = em.getCriteriaBuilder();
+//        CriteriaQuery<AuthUser> c = cb.createQuery(AuthUser.class);
+//        Root<AuthUser> authUserRoot = c.from(AuthUser.class);
+//        c.select(authUserRoot).where(cb.equal(authUserRoot.get()))
         AuthUser authUser = em.find(AuthUser.class, id);
         return authUser.checkPassword(password);
     }
@@ -44,5 +52,30 @@ public class AuthManager {
         EntityManager em = ENTITY.getEntity();
         AuthUser authUser = em.find(AuthUser.class, id);
         return authUser.refreshToken();
+    }
+
+    public static long getUID(String token){
+        EntityManager em = ENTITY.getEntity();
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<AuthUser> c = cb.createQuery(AuthUser.class);
+        Root<AuthUser> authUserRoot = c.from(AuthUser.class);
+        c.select(authUserRoot).where(cb.equal(authUserRoot.get("token"), token));
+        Query query = em.createQuery( c ) ;
+        List<AuthUser> list = (List<AuthUser>) query.getResultList();
+        AuthUser authUser = list.get(0);
+
+        cb = em.getCriteriaBuilder();
+        CriteriaBuilder cb2 = em.getCriteriaBuilder();
+        CriteriaQuery<ServiceUser> c2 = cb2.createQuery(ServiceUser.class);
+        Root<ServiceUser> userRoot = c2.from(ServiceUser.class);
+        c2.select(userRoot).where(cb2.equal(userRoot.get("authUser"),authUser));
+        Query query2 = em.createQuery(c2);
+        List<ServiceUser> list2 = (List<ServiceUser>) query2.getResultList();
+        ServiceUser serviceUser = list2.get(0);
+
+
+        return serviceUser.getUid();
+
     }
 }

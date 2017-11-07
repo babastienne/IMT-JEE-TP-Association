@@ -1,5 +1,8 @@
 package servlets;
 
+import jdk.nashorn.internal.parser.Token;
+import servlets.util.TokenChecker;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +18,9 @@ public class HomeServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        process(request,response);
+        TokenChecker.checkConnection(request, response);
+        RequestDispatcher rd = request.getRequestDispatcher("/itemlist");
+        rd.forward(request,response);
     }
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

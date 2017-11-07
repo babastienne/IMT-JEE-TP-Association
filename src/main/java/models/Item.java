@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import static database.Entity.ENTITY;
+
 @Entity
 public class Item {
 
@@ -34,6 +36,13 @@ public class Item {
 	}
 
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public double getPrice() {
 		return price;

@@ -11,7 +11,7 @@ public class InitDatabase {
      */
     public static void main(String[] args){
         //Persistence.generateSchema("association", null);
-        EntityManager em = Persistence.createEntityManagerFactory("association").createEntityManager();
+        EntityManager em = Persistence.createEntityManagerFactory("association_create").createEntityManager();
         em.close();
         System.out.println("Database created");
     }
