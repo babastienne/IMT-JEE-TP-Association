@@ -23,10 +23,11 @@ public class TokenChecker {
     }
 
 
-    public static void checkConnection(HttpServletRequest request, HttpServletResponse response){
+    public static boolean checkConnection(HttpServletRequest request, HttpServletResponse response){
         String authCookie = "";
         Cookie[] cookies = request.getCookies();
         boolean haveToken = false;
+        boolean isGood = false;
         if(cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("authToken")) {
@@ -36,12 +37,15 @@ public class TokenChecker {
             }
         }
         try {
-
-            if((!haveToken) && !AuthManager.checkToken(authCookie)){
+            if((!haveToken) || !AuthManager.checkToken(authCookie)){
                 TokenChecker.renderNotConnected(request, response);
+            }else{
+                isGood = true;
             }
         }catch(Exception e){
             e.printStackTrace();
         }
+
+        return isGood;
     }
 }
