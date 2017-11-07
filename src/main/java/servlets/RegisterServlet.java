@@ -1,7 +1,8 @@
 package servlets;
 
-import models.Authentification.AuthUser;
-import models.ServiceUser;
+import static database.Entity.ENTITY;
+
+import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,9 +11,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import javax.servlet.http.HttpSession;
 
-import static database.Entity.ENTITY;
+import models.ServiceUser;
+import models.Authentification.AuthUser;
 
 /**
  * Created by SELIMFIXE on 03/11/2017.
@@ -31,7 +33,7 @@ public class RegisterServlet extends HttpServlet {
         Cookie monCookie = new Cookie( "authToken", authUser.getToken());
         String firstname = request.getParameter("name");
         String lastname = request.getParameter("family-name");
-        String address = request.getParameter("address");
+        String address = request.getParameter("adress");
         int zip = Integer.parseInt(request.getParameter("zip"));
         String city = request.getParameter("city");
         String identifiant = request.getParameter("email");
@@ -43,6 +45,11 @@ public class RegisterServlet extends HttpServlet {
         authUser.setServiceUser(user); // Lien entre ServiceUser et AuthUser
         ENTITY.update(authUser);
         response.addCookie(monCookie);
+        
+        // set connection to true (to the navbar status)
+        HttpSession session = request.getSession();
+        session.setAttribute("isConnected", true);
+        
         response.sendRedirect("/login.jsp");
     }
 
