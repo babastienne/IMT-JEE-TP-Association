@@ -29,15 +29,7 @@ public class DisconnectServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.removeAttribute("authToken"); 
         
-        RequestDispatcher rd = request.getRequestDispatcher("/login.jsp"); 
+        RequestDispatcher rd = request.getRequestDispatcher("/index.jsp"); 
         rd.forward(request, response);
-    }
-    
-    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        // set connection to false (to the navbar status)
-        HttpSession session = request.getSession();
-        session.setAttribute("isConnected", false);
-
-        response.sendRedirect("/login");
     }
 }
