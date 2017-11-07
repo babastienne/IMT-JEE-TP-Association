@@ -1,51 +1,85 @@
 package models;
 
 import models.Authentification.AuthUser;
-import org.hibernate.annotations.GenericGenerator;
 
 import static database.Entity.ENTITY;
 
-import java.rmi.server.UID;
 
 import javax.persistence.*;
 
+
+/**
+ * Classe modélisant l'utilisateur
+ */
 @Entity
 public class ServiceUser {
 
+    /**
+     * numéro d'utilisateur
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    /**
+     * prénom
+     */
     @Column(name="firstName", nullable=false)
     private String firstName;
 
+    /**
+     * nom
+     */
     @Column(name="lastName", nullable=false)
     private String lastName;
 
+    /**
+     * adresse email
+     */
     @Column(name="identifiant", nullable=false, unique=true)
     private String identifiant;
 
+    /**
+     * adresse postale
+     */
     @Column(name="adress", nullable=true)
     private String address;
 
+    /**
+     * code postal
+     */
     @Column(name="zip", nullable=true)
     private int zip;
 
+    /**
+     * ville
+     */
     @Column(name="city", nullable=true)
     private String city;
 
-//    @OneToMany(targetEntity = Order.class, mappedBy = "user")
-//    List<Order> order;
-
-
+    /**
+     * Lien vers la classe gérant l'authentification de l'utilisateur
+     */
     @OneToOne(mappedBy = "serviceUser", cascade = {CascadeType.ALL})
     private AuthUser authUser;
 
+    /**
+     * Dernière commande lié à l'utilisateur
+     */
     @OneToOne
     private ServiceOrder order;
 
     public ServiceUser(){}
 
+    /**
+     * Constructeur
+     * @param firstname
+     * @param lastname
+     * @param identifiant
+     * @param address
+     * @param zip
+     * @param city
+     */
     public ServiceUser(String firstname, String lastname, String identifiant, String address, int zip, String city){
         this();
         this.firstName = firstname;

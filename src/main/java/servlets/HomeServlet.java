@@ -1,6 +1,5 @@
 package servlets;
 
-import jdk.nashorn.internal.parser.Token;
 import servlets.util.TokenChecker;
 
 import javax.servlet.RequestDispatcher;
@@ -11,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Servlet renvoyant vers la page d'accueil
+ */
 @WebServlet(name = "HomeServlet", urlPatterns = {"/index"})
 public class HomeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

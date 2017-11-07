@@ -3,8 +3,11 @@ package database;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.util.Objects;
 
+
+/**
+ * Singleton d'EntityManager
+ */
 public class Entity {
 
     public static Entity ENTITY = new Entity();
