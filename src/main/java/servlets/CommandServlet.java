@@ -1,5 +1,6 @@
 package servlets;
 
+
 import models.Authentification.AuthManager;
 import models.Authentification.AuthUser;
 import models.Item;
@@ -8,26 +9,28 @@ import models.ServiceOrder;
 import models.ServiceUser;
 import servlets.util.TokenChecker;
 
+import static database.Entity.ENTITY;
+
+import java.io.IOException;
+import java.util.List;
+
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.ws.Service;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
-import static database.Entity.ENTITY;
+import models.OrderLine;
+import models.ServiceOrder;
+import models.Authentification.AuthManager;
+import servlets.util.TokenChecker;
 
 /**
  * Servlet s'occupant d'afficher la liste des articles de la commande
