@@ -1,12 +1,12 @@
 package servlets.util;
 
-import models.Authentification.AuthManager;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import models.Authentification.AuthManager;
 
 /**
  * Created by SELIMFIXE on 03/11/2017.
@@ -24,20 +24,9 @@ public class TokenChecker {
 
 
     public static void checkConnection(HttpServletRequest request, HttpServletResponse response){
-        String authCookie = "";
-        Cookie[] cookies = request.getCookies();
-        boolean haveToken = false;
-        if(cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("authToken")) {
-                    authCookie = cookie.getValue();
-                    haveToken = true;
-                }
-            }
-        }
+        String authSession = (String) request.getSession().getAttribute("authToken");
         try {
-
-            if((!haveToken) && !AuthManager.checkToken(authCookie)){
+            if(authSession == null || !AuthManager.checkToken(authSession)){
                 TokenChecker.renderNotConnected(request, response);
             }
         }catch(Exception e){

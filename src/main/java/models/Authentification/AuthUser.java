@@ -95,7 +95,7 @@ public class AuthUser {
     private String toHash(String str) throws NoSuchAlgorithmException {
         StringBuffer hexString = new StringBuffer();
         MessageDigest md = MessageDigest.getInstance("MD5");
-        byte[] hash = md.digest();
+        byte[] hash = md.digest(str.getBytes());
 
         for (int i = 0; i < hash.length; i++) {
             if ((0xff & hash[i]) < 0x10) {
