@@ -26,7 +26,7 @@ public class ServiceOrder {
     /**
      * Liste d'ajout d'article
      */
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", orphanRemoval = true)
     private List<OrderLine> orderLines;
 
     public ServiceOrder(){}

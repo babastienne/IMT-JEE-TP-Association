@@ -5,6 +5,7 @@ import models.Authentification.AuthUser;
 import models.Item;
 import models.OrderLine;
 import models.ServiceOrder;
+import org.hibernate.annotations.Cascade;
 import servlets.util.TokenChecker;
 
 import javax.persistence.EntityManager;
@@ -34,7 +35,25 @@ import static database.Entity.ENTITY;
 @WebServlet(name = "CommandServlet", urlPatterns = {"/command"})
 public class CommandServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        EntityManager em = ENTITY.getEntity();
+        String authCookie = "";
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("authToken")) {
+                authCookie = cookie.getValue();
+            }
+        }
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<ServiceOrder> c = cb.createQuery(ServiceOrder.class);
+        Root<ServiceOrder> e = c.from(ServiceOrder.class);
+        c.select(e).where(cb.equal(e.get("user"), AuthManager.getUID(authCookie) ));
+        Query query = em.createQuery(c);
+        ServiceOrder so = (ServiceOrder) query.getResultList().get(0);
+        em.getTransaction().begin();
+        em.remove(so);
+        em.getTransaction().commit();
 
+        response.sendRedirect("/command");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -57,12 +76,14 @@ public class CommandServlet extends HttpServlet {
         c.select(e).where(cb.equal(e.get("orderId"), AuthManager.getUID(authCookie)));
         Query query = em.createQuery(c);
         List<ServiceOrder> list = (List<ServiceOrder>) query.getResultList();
-        ServiceOrder order = list.get(0);
+        if(list != null && !list.isEmpty()) {
+            ServiceOrder order = list.get(0);
 
-        // Récupération des ajouts d'article lié à la commande
-        List<OrderLine> orderLines = order.getOrders();
-        request.setAttribute("listItems", orderLines);
-        request.setAttribute("orderLines", orderLines);
+            // Récupération des ajouts d'article lié à la commande
+            List<OrderLine> orderLines = order.getOrders();
+            request.setAttribute("listItems", orderLines);
+            request.setAttribute("orderLines", orderLines);
+        }
         String destination = "command.jsp";
         RequestDispatcher rd = request.getRequestDispatcher(destination);
         rd.forward(request,response);
