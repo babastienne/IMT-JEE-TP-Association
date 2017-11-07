@@ -1,9 +1,16 @@
 package servlets;
 
+import models.Authentification.AuthManager;
+import models.Item;
+import models.OrderLine;
+import models.ServiceOrder;
+import models.ServiceUser;
+import servlets.util.TokenChecker;
 import static database.Entity.ENTITY;
 
 import java.io.IOException;
 import java.util.List;
+
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -26,8 +33,8 @@ import servlets.util.TokenChecker;
 @WebServlet(name = "ItemlistServlet", urlPatterns = {"/itemlist"})
 public class ItemlistServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        TokenChecker.checkConnection(request,response);
-        if(!response.isCommitted()) {
+        TokenChecker.checkConnection(request, response);
+        if (!response.isCommitted()) {
             EntityManager em = ENTITY.getEntity();
 
             // Ajout d'article dans la commande
@@ -36,6 +43,32 @@ public class ItemlistServlet extends HttpServlet {
             Item item = em.find(Item.class, Long.parseLong(code));
             item.setStock(item.getStock() - Integer.parseInt(quantity));
             ENTITY.update(item);
+
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<ServiceUser> c = cb.createQuery(ServiceUser.class);
+            String authSession = (String) request.getSession().getAttribute("authToken");
+            ServiceUser user = em.find(ServiceUser.class, AuthManager.getUID(authSession));
+            ServiceOrder serviceOrder = user.getOrder();
+
+            OrderLine ol = null;
+            boolean isAlreadyIn = false;
+            for (OrderLine i : serviceOrder.getOrders()) {
+                if (i.getItem().getId() == item.getId()) {
+                    isAlreadyIn = true;
+                    ol = i;
+                    break;
+                }
+            }
+
+            if (isAlreadyIn) {
+                ol.setQuantityItem(ol.getQuantityItem() + Integer.parseInt(quantity));
+                ENTITY.update(ol);
+            } else {
+                ol = new OrderLine(item, serviceOrder, Integer.parseInt(quantity));
+                ENTITY.create(ol);
+            }
+
+
             response.sendRedirect("/itemlist");
         }
     }
