@@ -21,10 +21,10 @@ public class AuthUser {
     @OneToOne(fetch = FetchType.LAZY)
     private ServiceUser serviceUser;
 
+
   public AuthUser(){}
 
     public AuthUser(String id, String password){
-       // this();
         this.token = UUID.randomUUID().toString().replaceAll("-", "");
         this.id = id;
         try {

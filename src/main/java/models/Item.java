@@ -14,7 +14,7 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="code", nullable=false)
-    private long id;
+    private long itemId;
     
     @Column(name="price", nullable=false)
     private double price;

@@ -11,14 +11,14 @@ public class ServiceOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long orderId;
 
     @OneToOne
     private ServiceUser user;
 
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
     private List<OrderLine> orderLines;
-
 
     public ServiceOrder(){}
 
