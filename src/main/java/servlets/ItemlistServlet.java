@@ -26,31 +26,35 @@ import static database.Entity.ENTITY;
 public class ItemlistServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         TokenChecker.checkConnection(request,response);
-        EntityManager em= ENTITY.getEntity();
+        if(!response.isCommitted()) {
+            EntityManager em = ENTITY.getEntity();
 
-        // Ajout d'article dans la commande
-        String code = request.getParameter("code");
-        String quantity = request.getParameter("quantity");
-        Item item = em.find(Item.class, Long.parseLong(code));
-        item.setStock(item.getStock() - Integer.parseInt(quantity));
-        ENTITY.update(item);
-        response.sendRedirect("/itemlist");
+            // Ajout d'article dans la commande
+            String code = request.getParameter("code");
+            String quantity = request.getParameter("quantity");
+            Item item = em.find(Item.class, Long.parseLong(code));
+            item.setStock(item.getStock() - Integer.parseInt(quantity));
+            ENTITY.update(item);
+            response.sendRedirect("/itemlist");
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         TokenChecker.checkConnection(request,response);
-        EntityManager em= ENTITY.getEntity();
+        if(!response.isCommitted()) {
+            EntityManager em = ENTITY.getEntity();
 
-        //Récupération de l'ensemble des articles disponibles
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Item> c = cb.createQuery(Item.class);
-        Root<Item> e = c.from(Item.class);
-        c.select(e);
-        Query query = em.createQuery(c);
-        List<Item> listItems = (List<Item>) query.getResultList();
-        request.setAttribute("listItems", listItems);
-        String destination = "itemlist.jsp";
-        RequestDispatcher rd = request.getRequestDispatcher(destination);
-        rd.forward(request,response);
+            //Récupération de l'ensemble des articles disponibles
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Item> c = cb.createQuery(Item.class);
+            Root<Item> e = c.from(Item.class);
+            c.select(e);
+            Query query = em.createQuery(c);
+            List<Item> listItems = (List<Item>) query.getResultList();
+            request.setAttribute("listItems", listItems);
+            String destination = "itemlist.jsp";
+            RequestDispatcher rd = request.getRequestDispatcher(destination);
+            rd.forward(request, response);
+        }
     }
 }

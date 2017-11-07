@@ -9,7 +9,7 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
 
         <ul class="navbar-nav mr-auto">
-           	<c:if test="${sessionScope.isConnected == true}">
+           	<c:if test="${sessionScope.authToken != null}">
 	            <li class="nav-item">
 	                <a class="nav-link" href="/itemlist">Catalogue</a>
 	            </li>
@@ -20,7 +20,7 @@
         </ul>
 
         <c:choose>
-		    <c:when test="${sessionScope.isConnected == true}">
+		    <c:when test="${sessionScope.authToken != null}">
 		        <a class="btn btn-outline-danger my-2 my-sm-0" href="/disconnect">Déconnexion</a>
 		    </c:when>    
 		    <c:otherwise>

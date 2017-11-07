@@ -25,6 +25,10 @@ public class DisconnectServlet extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // remove token attribute in session vars
+        HttpSession session = request.getSession();
+        session.removeAttribute("authToken"); 
+        
         RequestDispatcher rd = request.getRequestDispatcher("/login.jsp"); 
         rd.forward(request, response);
     }

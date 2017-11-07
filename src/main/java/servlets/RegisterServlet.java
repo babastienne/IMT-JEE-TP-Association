@@ -30,7 +30,6 @@ public class RegisterServlet extends HttpServlet {
         String password =  request.getParameter("password");
         AuthUser authUser = new AuthUser(id, password); // Création de l'AuthUser
         ENTITY.create(authUser);
-        Cookie monCookie = new Cookie( "authToken", authUser.getToken());
         String firstname = request.getParameter("name");
         String lastname = request.getParameter("family-name");
         String address = request.getParameter("adress");
@@ -44,12 +43,6 @@ public class RegisterServlet extends HttpServlet {
         ENTITY.update(user);
         authUser.setServiceUser(user); // Lien entre ServiceUser et AuthUser
         ENTITY.update(authUser);
-        response.addCookie(monCookie);
-        
-        // set connection to true (to the navbar status)
-        HttpSession session = request.getSession();
-        session.setAttribute("isConnected", true);
-        
         response.sendRedirect("/login.jsp");
     }
 
