@@ -20,6 +20,7 @@
         <div class="text-center">
             <h2> Inscrivez-vous à la vegassociation </h2>
             <p>Les champs marqué du caractère (*) doivent obligatoirement être remplis pour pouvoir finaliser l'inscription.</p>
+            <p>Si vous possédez déjà un compte sur notre site internet, cliquez ici pour <a href="login">retourner à la page de connexion</a>.</p>
             <br/>
         </div>
         <form class="container-fluid align-items-center" style="max-width: 350px; min-width: 350px; margin-bottom: 5%;" method="POST" action=>
@@ -49,10 +50,6 @@
                 <input class="form-control" type ="number" name="zip" value="" id="zip" placeholder="92185"/>
                 <label for="inputEmail">Ville</label>
                 <input class="form-control" type ="text" name="city" value="" id="city" placeholder="Clichy"/>
-            </div>
-
-            <div class="form-group">
-                <select class="form-control bfh-countries" data-country="US"></select>
             </div>
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Inscription</button>
