@@ -47,23 +47,14 @@ public class CommandServlet extends HttpServlet {
                     authCookie = cookie.getValue();
                 }
             }
-        c.select(e).where(cb.equal(e.get("user_id"), AuthManager.getUID(authCookie)));
+        c.select(e).where(cb.equal(e.get("orderId"), AuthManager.getUID(authCookie)));
         Query query = em.createQuery(c);
         List<ServiceOrder> list = (List<ServiceOrder>) query.getResultList();
-        ServiceOrder obj = list.get(0);
-        List<OrderLine> orderLines = obj.getOrders();
+        ServiceOrder order = list.get(0);
+        List<OrderLine> orderLines = order.getOrders();
+        request.setAttribute("listItems", orderLines);
 
-
-
-
-        //HashMap<Item, Integer> items = obj.getItems();
-        //List<OrderLine> listOrder = new ArrayList<OrderLine>();
-
-        //for(Item item : items.keySet()){
-        //    items.get(item);
-        //    listOrder.add(item.getId(), item.getName(), item.getPrice(), (Integer) items.get(item));
-        //}
-        request.setAttribute("listOrder", orderLines);
+        request.setAttribute("orderLines", orderLines);
         String destination = "command.jsp";
         RequestDispatcher rd = request.getRequestDispatcher(destination);
         rd.forward(request,response);

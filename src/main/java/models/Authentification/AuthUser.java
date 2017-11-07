@@ -35,6 +35,14 @@ public class AuthUser {
         }
     }
 
+    public ServiceUser getServiceUser() {
+        return serviceUser;
+    }
+
+    public void setServiceUser(ServiceUser serviceUser) {
+        this.serviceUser = serviceUser;
+    }
+
     public String getId() {
         return id;
     }
@@ -83,7 +91,6 @@ public class AuthUser {
             System.err.println("Erreur dans la generation du hash MD5 du mot de passe");
             e.printStackTrace();
         }
-        System.out.println("password good or not: "+Boolean.toString(checked));
         return checked;
     }
 

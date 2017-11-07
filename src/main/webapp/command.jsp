@@ -45,7 +45,7 @@ orderLine.getQuantityItem() -->
         <tr>
             <td><c:out value ="${orderLine.getItem().getId()}"/></td>
             <td><c:out value = "${orderLine.getItem().getName()}"/></td>
-            <td><c:out value = "${orderLine.getItem().Price()}"/></td>
+            <td><c:out value = "${orderLine.getItem().getPrice()}"/></td>
             <td><c:out value = "${orderLine.getQuantityItem()}"/></td>
         </tr>
     </c:forEach>

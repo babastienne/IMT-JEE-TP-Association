@@ -25,6 +25,7 @@ public class AuthManager {
 //        Root<AuthUser> authUserRoot = c.from(AuthUser.class);
 //        c.select(authUserRoot).where(cb.equal(authUserRoot.get()))
         AuthUser authUser = em.find(AuthUser.class, id);
+
         return authUser.checkPassword(password);
     }
 
@@ -39,7 +40,6 @@ public class AuthManager {
         c.select(authUser);
         Query query = em.createQuery( c ) ;
         List<AuthUser> list = (List<AuthUser>) query.getResultList();
-        System.out.println(list.size());
         for(AuthUser user : list){
             if(user.getToken().equals(token)){
                 return true;
@@ -59,23 +59,33 @@ public class AuthManager {
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<AuthUser> c = cb.createQuery(AuthUser.class);
-        Root<AuthUser> authUserRoot = c.from(AuthUser.class);
-        c.select(authUserRoot).where(cb.equal(authUserRoot.get("token"), token));
+        Root<AuthUser> authUser = c.from(AuthUser.class);
+        //c.select(authUser).where( cb.equal( authUser.get("token"), token ) );
+        c.select(authUser);
         Query query = em.createQuery( c ) ;
         List<AuthUser> list = (List<AuthUser>) query.getResultList();
-        AuthUser authUser = list.get(0);
+        AuthUser selectedAuthUser = null;
+        for(AuthUser user : list){
+            if(user.getToken().equals(token)){
+                selectedAuthUser=user;
+            }
+        }
+
 
         cb = em.getCriteriaBuilder();
         CriteriaBuilder cb2 = em.getCriteriaBuilder();
         CriteriaQuery<ServiceUser> c2 = cb2.createQuery(ServiceUser.class);
         Root<ServiceUser> userRoot = c2.from(ServiceUser.class);
-        c2.select(userRoot).where(cb2.equal(userRoot.get("authUser"),authUser));
+       // c2.select(userRoot).where(cb2.equal(userRoot.get("authUser"), selectedAuthUser));
+        c2.select(userRoot);
         Query query2 = em.createQuery(c2);
         List<ServiceUser> list2 = (List<ServiceUser>) query2.getResultList();
-        ServiceUser serviceUser = list2.get(0);
-
-
-        return serviceUser.getUid();
+        for(ServiceUser user : list2){
+            if(user.getAuthUser().getId().equals(selectedAuthUser.getId())){
+                return user.getUid();
+            }
+        }
+        return 0;
 
     }
 }
