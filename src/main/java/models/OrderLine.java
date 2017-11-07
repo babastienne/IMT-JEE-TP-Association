@@ -14,7 +14,7 @@ public class OrderLine {
     @OneToOne
     private Item item;
 
-    @OneToOne
+    @ManyToOne
     private ServiceOrder order;
 
     //private long idItem;

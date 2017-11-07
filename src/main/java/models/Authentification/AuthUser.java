@@ -35,6 +35,14 @@ public class AuthUser {
         }
     }
 
+    public ServiceUser getServiceUser() {
+        return serviceUser;
+    }
+
+    public void setServiceUser(ServiceUser serviceUser) {
+        this.serviceUser = serviceUser;
+    }
+
     public String getId() {
         return id;
     }

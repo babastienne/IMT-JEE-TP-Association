@@ -38,6 +38,8 @@ public class RegisterServlet extends HttpServlet {
         ENTITY.create(user);
         user.setAuthUser(authUser);
         ENTITY.update(user);
+        authUser.setServiceUser(user);
+        ENTITY.update(user);
         response.addCookie(monCookie);
         request.setAttribute("isConnected", "true");
         RequestDispatcher rd = request.getRequestDispatcher("/hello");

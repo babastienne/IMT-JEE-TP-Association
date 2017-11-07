@@ -82,13 +82,16 @@ public class AuthManager {
         CriteriaBuilder cb2 = em.getCriteriaBuilder();
         CriteriaQuery<ServiceUser> c2 = cb2.createQuery(ServiceUser.class);
         Root<ServiceUser> userRoot = c2.from(ServiceUser.class);
-        c2.select(userRoot).where(cb2.equal(userRoot.get("authUser"), selectedAuthUser));
+       // c2.select(userRoot).where(cb2.equal(userRoot.get("authUser"), selectedAuthUser));
+        c2.select(userRoot);
         Query query2 = em.createQuery(c2);
         List<ServiceUser> list2 = (List<ServiceUser>) query2.getResultList();
-        ServiceUser serviceUser = list2.get(0);
-
-
-        return serviceUser.getUid();
+        for(ServiceUser user : list2){
+            if(user.getAuthUser().getId().equals(selectedAuthUser.getId())){
+                return user.getUid();
+            }
+        }
+        return 0;
 
     }
 }

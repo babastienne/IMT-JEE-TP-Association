@@ -38,7 +38,6 @@ public class ServiceUser {
 //    List<Order> order;
 
 
-
     @OneToOne(mappedBy = "serviceUser", cascade = {CascadeType.ALL})
     private AuthUser authUser;
 
