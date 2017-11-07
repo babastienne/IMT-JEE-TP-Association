@@ -1,6 +1,8 @@
 package models.Authentification;
 
-import models.ServiceUser;
+import static database.Entity.ENTITY;
+
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -8,9 +10,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import java.util.List;
-
-import static database.Entity.ENTITY;
+import models.ServiceUser;
 
 /**
  * Classe avec des méthodes statiques s'occupant à vérifier l'authenticité des paramètres de connexion
@@ -23,7 +23,7 @@ public class AuthManager {
      * @param password mot de passe
      * @return True si c'est bon
      */
-    public static boolean checkAuth(String id, String password){
+    public static boolean checkAuth(String id, String password) throws NullPointerException {
         EntityManager em = ENTITY.getEntity();
         AuthUser authUser = em.find(AuthUser.class, id);
 

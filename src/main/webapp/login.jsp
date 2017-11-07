@@ -7,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ page contentType="text/html" language="java" %>
 <%@ page pageEncoding="UTF-8" %>
 <!DOCTYPE HTML>
@@ -22,6 +23,12 @@
         <div class="text-center">
             <h2> Authentification </h2>
             <br/>
+            <c:if test="${sessionScope.errorLogin == true}">
+            	<p style="color: red;">Erreur lors de l'authentification, mauvais nom d'utilisateur ou mauvais mot de passe.</p>
+            </c:if>
+            <c:if test="${sessionScope.errorUnknown == true}">
+            	<p style="color: red;">Erreur lors de l'authentification, veuillez recommencer</p>
+            </c:if>
         </div>
         <form method="POST" action=>
             <label for="inputEmail" class="sr-only form">Adresse e-mail</label>
