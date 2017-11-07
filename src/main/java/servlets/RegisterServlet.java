@@ -1,8 +1,14 @@
 package servlets;
 
+
+import models.Authentification.AuthUser;
+import models.ServiceOrder;
+import models.ServiceUser;
+
 import static database.Entity.ENTITY;
 
 import java.io.IOException;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,7 +47,15 @@ public class RegisterServlet extends HttpServlet {
         ENTITY.update(user);
         authUser.setServiceUser(user); // Lien entre ServiceUser et AuthUser
         ENTITY.update(authUser);
-        response.sendRedirect("/login.jsp");
+
+        //Creation d'un order de base
+        ServiceOrder order = new ServiceOrder();
+        ENTITY.create(order);
+        order.setUser(user);
+        ENTITY.update(order);
+        user.setOrder(order);
+        ENTITY.update(user);
+        response.sendRedirect("/login");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
