@@ -1,6 +1,5 @@
 package models.Authentification;
 
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import database.Entity;
 import models.ServiceUser;
 
@@ -20,6 +19,11 @@ public class AuthManager {
 
     public static boolean checkAuth(String id, String password){
         EntityManager em = ENTITY.getEntity();
+
+//        CriteriaBuilder cb = em.getCriteriaBuilder();
+//        CriteriaQuery<AuthUser> c = cb.createQuery(AuthUser.class);
+//        Root<AuthUser> authUserRoot = c.from(AuthUser.class);
+//        c.select(authUserRoot).where(cb.equal(authUserRoot.get()))
         AuthUser authUser = em.find(AuthUser.class, id);
         return authUser.checkPassword(password);
     }
