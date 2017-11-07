@@ -23,29 +23,14 @@ public class TokenChecker {
     }
 
 
-    public static boolean checkConnection(HttpServletRequest request, HttpServletResponse response){
-        String authCookie = "";
-        Cookie[] cookies = request.getCookies();
-        boolean haveToken = false;
-        boolean isGood = false;
-        if(cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("authToken")) {
-                    authCookie = cookie.getValue();
-                    haveToken = true;
-                }
-            }
-        }
+    public static void checkConnection(HttpServletRequest request, HttpServletResponse response){
+        String authSession = (String) request.getSession().getAttribute("authToken");
         try {
-            if((!haveToken) || !AuthManager.checkToken(authCookie)){
+            if(authSession == null || !AuthManager.checkToken(authSession)){
                 TokenChecker.renderNotConnected(request, response);
-            }else{
-                isGood = true;
             }
         }catch(Exception e){
             e.printStackTrace();
         }
-
-        return isGood;
     }
 }
