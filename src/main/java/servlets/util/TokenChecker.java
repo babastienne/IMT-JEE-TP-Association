@@ -42,15 +42,6 @@ public class TokenChecker {
             }
         }
         try {
-            /*if (haveToken && AuthManager.checkToken(authCookie)) {
-                TokenChecker.renderConnected(request, response);
-            } else {
-                TokenChecker.renderNotConnected(request, response);
-            }*/
-
-            System.out.println("cookie good: "+Boolean.toString(AuthManager.checkToken(authCookie)));
-            System.out.println(authCookie);
-            System.out.println("haveToken: "+Boolean.toString(haveToken));
 
             if((!haveToken) && !AuthManager.checkToken(authCookie)){
                 TokenChecker.renderNotConnected(request, response);

@@ -41,7 +41,7 @@ public class Hello extends HttpServlet {
         out.println("<h1> Connection:"+request.getAttribute("isConnected")+ " </h1>");
 
         boolean isChecked = AuthManager.checkToken(request.getParameter("authToken"));
-        System.out.println(request.getParameter("authToken"));
+
 
         out.println("<h1> Token is valid: "+Boolean.toString(isChecked)+ " </h1>");
 

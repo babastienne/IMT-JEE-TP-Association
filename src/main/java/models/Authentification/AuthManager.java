@@ -40,7 +40,6 @@ public class AuthManager {
         c.select(authUser);
         Query query = em.createQuery( c ) ;
         List<AuthUser> list = (List<AuthUser>) query.getResultList();
-        System.out.println(list.size());
         for(AuthUser user : list){
             if(user.getToken().equals(token)){
                 return true;
@@ -65,17 +64,12 @@ public class AuthManager {
         c.select(authUser);
         Query query = em.createQuery( c ) ;
         List<AuthUser> list = (List<AuthUser>) query.getResultList();
-        System.out.println(list.size());
         AuthUser selectedAuthUser = null;
         for(AuthUser user : list){
             if(user.getToken().equals(token)){
                 selectedAuthUser=user;
             }
         }
-
-
-        System.out.println("SSZZJOIJEREI "+selectedAuthUser.getToken());
-
 
 
         cb = em.getCriteriaBuilder();

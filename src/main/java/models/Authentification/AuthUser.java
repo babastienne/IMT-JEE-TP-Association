@@ -86,14 +86,11 @@ public class AuthUser {
     public boolean checkPassword(String password){
         boolean checked = false;
         try{
-            System.out.println("CHECKED MDP "+this.toHash(password));
-            System.out.println(this.hashPassword);
             checked = this.hashPassword.equals(this.toHash(password));
         }catch(NoSuchAlgorithmException e){
             System.err.println("Erreur dans la generation du hash MD5 du mot de passe");
             e.printStackTrace();
         }
-        System.out.println("password good or not: "+Boolean.toString(checked));
         return checked;
     }
 
