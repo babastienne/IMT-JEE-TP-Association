@@ -31,13 +31,14 @@ public class AuthServlet extends HttpServlet {
             Cookie token = new Cookie("authToken", newToken);
             response.addCookie(token);
             request.setAttribute("isConnected", "true");
+            response.sendRedirect("/itemlist");
 
         }else{
             //TODO redirection vers une page d'erreur de connexion
             request.setAttribute("isConnected", "false");
         }
-       // RequestDispatcher rd =request.getRequestDispatcher("/itemlist");
-        response.sendRedirect("/itemlist");
+        response.sendRedirect("/login");
+
     }
 
 
